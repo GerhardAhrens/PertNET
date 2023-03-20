@@ -3,8 +3,59 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
+    <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
+    <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <None Remove="Resources\Picture\ApplicationIcon.ico" />
+    <None Remove="Resources\Picture\ApplicationIcon.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Picture\ApplicationIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
+    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />
+    <EmbeddedResource Include="Resources\Picture\ApplicationIcon.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PerlNET.Version\PerlNET.Version.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EasyPrototypingNET">
+      <HintPath>..\_Lib\EasyPrototypingNET.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Converter\" />
+    <Folder Include="Core\IO\" />
+    <Folder Include="Core\UI\" />
+    <Folder Include="Resources\HelpText\" />
+    <Folder Include="Resources\Style\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo %2525date%2525 %2525time%2525 &gt; &quot;$(ProjectDir)\Resources\BuildDate.txt" />
+  </Target>
 
 </Project>
