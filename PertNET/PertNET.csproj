@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PerlNET.Version\PerlNET.Version.csproj" />
+    <ProjectReference Include="..\PertNET.Data\PertNET.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
