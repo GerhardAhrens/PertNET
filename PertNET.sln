@@ -3,16 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PertNET", "PertNET\PertNET.csproj", "{3D6E9A81-93C8-4800-8C7B-0EC990FD7AF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PertNET", "PertNET\PertNET.csproj", "{3D6E9A81-93C8-4800-8C7B-0EC990FD7AF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerlNET.Version", "PerlNET.Version\PerlNET.Version.csproj", "{E0CE24F2-1CCF-4AEC-AAA1-DFC3CECCD2FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerlNET.Version", "PerlNET.Version\PerlNET.Version.csproj", "{E0CE24F2-1CCF-4AEC-AAA1-DFC3CECCD2FD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Lib", "_Lib", "{BB58042F-BF04-4882-BC27-1EE9A1B984D1}"
 	ProjectSection(SolutionItems) = preProject
 		_Lib\EasyPrototypingNET.dll = _Lib\EasyPrototypingNET.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PertNET.Data", "PertNET.Data\PertNET.Data.csproj", "{BF4A52F1-3CC1-4011-9472-9CDD8F3F9405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PertNET.Data", "PertNET.Data\PertNET.Data.csproj", "{BF4A52F1-3CC1-4011-9472-9CDD8F3F9405}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Doc", "_Doc", "{CA306BFA-729E-4E9D-A115-564E5CA16D92}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PertNET.Export", "PertNET.Export\PertNET.Export.csproj", "{7C83497D-4D4E-4092-A4D4-37C3D2797159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +39,10 @@ Global
 		{BF4A52F1-3CC1-4011-9472-9CDD8F3F9405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF4A52F1-3CC1-4011-9472-9CDD8F3F9405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF4A52F1-3CC1-4011-9472-9CDD8F3F9405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
