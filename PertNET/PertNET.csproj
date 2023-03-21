@@ -6,6 +6,7 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
+    <UseWindowsForms>True</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,6 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PerlNET.Version\PerlNET.Version.csproj" />
     <ProjectReference Include="..\PertNET.Data\PertNET.Data.csproj" />
+    <ProjectReference Include="..\PertNET.Export\PertNET.Export.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,9 +52,18 @@
   <ItemGroup>
     <Folder Include="Converter\" />
     <Folder Include="Core\IO\" />
+    <Folder Include="Core\FileTargetFolder\" />
+    <Folder Include="Core\Enums\" />
+    <Folder Include="Core\EventArgs\" />
+    <Folder Include="Core\Validations\" />
+    <Folder Include="Core\Settings\" />
     <Folder Include="Core\UI\" />
     <Folder Include="Resources\HelpText\" />
     <Folder Include="Resources\Style\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

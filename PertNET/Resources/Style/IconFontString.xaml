@@ -1,0 +1,44 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Awesome Fonts  -->
+    <!--  Chrome Window  -->
+    <sys:String x:Key="fntChromeWindowClose">&#xf00d;</sys:String>
+    <sys:String x:Key="fntChromeWindowMaximize">&#xf2d0;</sys:String>
+    <sys:String x:Key="fntChromeWindowMinimize">&#xf2d1;</sys:String>
+
+    <!--  Statuszeile  -->
+    <sys:String x:Key="fntStatusbarUser">&#xf007;</sys:String>
+    <sys:String x:Key="fntStatusbarMonitorSize">&#xf108;</sys:String>
+    <sys:String x:Key="fntStatusbarClock">&#xf133;</sys:String>
+
+    <!--  Context Menü  -->
+    <sys:String x:Key="fntOpenMenue">&#xf142;</sys:String>
+    <sys:String x:Key="fntNewDatabase">&#xe4ee;</sys:String>
+    <sys:String x:Key="fntOpenDatabase">&#xf07c;</sys:String>
+    <sys:String x:Key="fntCloseDatabase">&#xe185;</sys:String>
+    <sys:String x:Key="fntSaveDatabase">&#xf0c7;</sys:String>
+    <sys:String x:Key="fntAddEntry">&#xf65e;</sys:String>
+    <sys:String x:Key="fntAddSubEntry">&#xf802;</sys:String>
+    <sys:String x:Key="fntEditEntry">&#xf303;</sys:String>
+    <sys:String x:Key="fntDeleteEntry">&#xf65d;</sys:String>
+    <sys:String x:Key="fntDelete2">&#xf12d;</sys:String>
+    <sys:String x:Key="fntDelete3">&#xf2ed;</sys:String>
+    <sys:String x:Key="fntInsertEntry">&#xf0c9;</sys:String>
+    <sys:String x:Key="fntCopyEntry">&#xf24d;</sys:String>
+    <sys:String x:Key="fntSettings">&#xf7d9;</sys:String>
+    <sys:String x:Key="fntExport">&#xf1c2;</sys:String>
+    <sys:String x:Key="fntCalcMemory">&#xf5fd;</sys:String>
+    <sys:String x:Key="fntCopyClipboard">&#xf0ea;</sys:String>
+
+    <!--  Button  -->
+    <sys:String x:Key="fntButtonOK">&#xf00c;</sys:String>
+    <sys:String x:Key="fntButtonSave">&#xf0c7;</sys:String>
+    <sys:String x:Key="fntButtonCancle">&#xf00d;</sys:String>
+
+    <!--  Filter  -->
+    <sys:String x:Key="fntSmile">&#xf4da;</sys:String>
+    <sys:String x:Key="fntKeyboard">&#xf11c;</sys:String>
+</ResourceDictionary>
