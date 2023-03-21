@@ -13,7 +13,11 @@
 
 
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources\Style\ApplicationCoreStyle.xaml" />
+                <ResourceDictionary Source="Resources\Style\ListViewStyle.xaml" />
                 <ResourceDictionary Source="Resources\Style\TextString.xaml" />
+                <ResourceDictionary Source="Resources\Style\IconFontString.xaml" />
+                <ResourceDictionary Source="Resources\Style\Pictures.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/EasyPrototypingNET;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

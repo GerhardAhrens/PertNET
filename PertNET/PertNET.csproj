@@ -55,14 +55,19 @@
     <Folder Include="Core\FileTargetFolder\" />
     <Folder Include="Core\Enums\" />
     <Folder Include="Core\EventArgs\" />
+    <Folder Include="Core\ApplicationHotKeys\" />
     <Folder Include="Core\Validations\" />
     <Folder Include="Core\Settings\" />
     <Folder Include="Core\UI\" />
+    <Folder Include="DataRepository\" />
+    <Folder Include="Extension\" />
     <Folder Include="Resources\HelpText\" />
     <Folder Include="Resources\Style\" />
+    <Folder Include="View\Calculator\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiteDB" Version="5.0.16" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
 
