@@ -4,6 +4,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
+      <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PerlNET.Version\PerlNET.Version.csproj" />
+    <ProjectReference Include="..\PertNET.Data\PertNET.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,7 @@
 
   <ItemGroup>
     <Folder Include="Extension\" />
+    <Folder Include="Exporter\" />
   </ItemGroup>
 
 </Project>

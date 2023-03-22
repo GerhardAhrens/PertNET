@@ -21,6 +21,7 @@ namespace PERT.Core
     using System.Text.RegularExpressions;
 
     using EasyPrototypingNET.LinqExpressions;
+    using EasyPrototypingNET.Pattern;
 
     public class WorkUserInfoValidation<TViewModel> where TViewModel : class
     {
@@ -35,18 +36,20 @@ namespace PERT.Core
             return validation;
         }
 
-        public string NotEmpty(Expression<Func<TViewModel, object>> expression, string message)
+        public Result<string> NotEmpty(Expression<Func<TViewModel, object>> expression, string message)
         {
             string result = string.Empty;
+            bool resultValidError = false;
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             string propertyValue = (string)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject);
 
             if (string.IsNullOrEmpty(propertyValue) == true)
             {
                 result = $"Das Feld '{message}' darf nicht leer sein.";
+                resultValidError = true;
             }
 
-            return result;
+            return Result<string>.SuccessResult(result, resultValidError);
         }
     }
 }

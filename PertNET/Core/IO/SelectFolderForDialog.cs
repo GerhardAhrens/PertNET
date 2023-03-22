@@ -17,10 +17,12 @@ namespace PertNET.Core
 {
     using System;
     using System.IO;
+    using System.Runtime.Versioning;
 
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.Pattern;
 
+    [SupportedOSPlatform("windows")]
     public class SelectFolderForDialog : DisposableBase
     {
         public SelectFolderForDialog(SelectFolderSettings settings, string fileType)

@@ -16,10 +16,12 @@ namespace ClosedXML.Excel
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Runtime.Versioning;
     using System.Text;
     using System.Text.RegularExpressions;
     using DocumentFormat.OpenXml.Spreadsheet;
 
+    [SupportedOSPlatform("windows")]
     public static class ClosedXMLExtension
     {
         public static void FreezeRows(this IXLWorksheet @this, int row)

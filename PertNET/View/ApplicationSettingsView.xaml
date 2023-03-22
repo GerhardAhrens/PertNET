@@ -1,0 +1,189 @@
+﻿<Window
+    x:Class="PertNET.View.ApplicationSettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:PertNET.View"
+    xmlns:localControls="clr-namespace:PertNET.View"
+    xmlns:localCore="clr-namespace:PertNET.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="ApplicationSettingsView"
+    Width="800"
+    Height="450"
+    Style="{DynamicResource ResourceKey=CustomWindowStyle}"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome
+                        CaptionHeight="30"
+                        CornerRadius="5"
+                        GlassFrameThickness="0"
+                        NonClientFrameEdges="None"
+                        ResizeBorderThickness="5"
+                        UseAeroCaptionButtons="False" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="LightYellow" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Grid>
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="5,30,5,5">
+                                <AdornerDecorator>
+                                    <ContentPresenter />
+                                </AdornerDecorator>
+                            </Border>
+
+                            <DockPanel
+                                Height="30"
+                                VerticalAlignment="Top"
+                                LastChildFill="False">
+                                <Button
+                                    x:Name="btnClose"
+                                    Width="Auto"
+                                    Margin="3,0,15,0"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{Binding Path=CmdAgg[WindowCloseCommand]}"
+                                    Content="{StaticResource ResourceKey=fntChromeWindowClose}"
+                                    DockPanel.Dock="Right"
+                                    FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                                    FontSize="20"
+                                    ToolTip="Beenden"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+
+                            </DockPanel>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <libWPF:CommandReference x:Key="HelpCmdKey" Command="{Binding Path=CmdAgg[HelpCommand]}" />
+        <libWPF:CommandReference x:Key="CloseCmdKey" Command="{Binding Path=CmdAgg[WindowCloseCommand]}" />
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="Esc"
+            Command="{StaticResource ResourceKey=CloseCmdKey}"
+            Modifiers="" />
+
+        <KeyBinding
+            Key="F1"
+            Command="{StaticResource ResourceKey=HelpCmdKey}"
+            Modifiers="" />
+    </Window.InputBindings>
+
+    <libWPF:SimpleGrid Columns="120,*" Rows="30,*,30">
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="10,0"
+            VerticalAlignment="Center"
+            Text="Filter" />
+
+        <libWPF:TextBoxEx
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="200"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="{Binding Path=FilterDefaultSearch, UpdateSourceTrigger=PropertyChanged}"
+            WindowChrome.IsHitTestVisibleInChrome="True" />
+
+        <TabControl
+            x:Name="tabControlSettings"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="5"
+            Grid.IsSharedSizeScope="True"
+            TabStripPlacement="Left">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="3" />
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem
+                TabIndex="0"
+                Tag="{x:Static localCore:SettingsTabItem.Allgemein}"
+                Visibility="{Binding Path=DataContext.VisibilityAgg[0], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}">
+                <TabItem.Header>
+                    <StackPanel Width="100" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource ResourceKey=TabHeaderTextBlockStyle}">
+                            <Run Text="Allgemein" />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <localControls:TabMainInfo Visibility="{Binding Path=DataContext.VisibilityAgg[0], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}" />
+            </TabItem>
+
+            <TabItem
+                TabIndex="1"
+                Tag="{x:Static localCore:SettingsTabItem.UserProjectInfo}"
+                Visibility="{Binding Path=DataContext.VisibilityAgg[1], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}">
+                <TabItem.Header>
+                    <StackPanel Width="100" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource ResourceKey=TabHeaderTextBlockStyle}">
+                            <Run Text="Benutzer/Projekt" />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <localControls:TabWorkUserInfo Visibility="{Binding Path=DataContext.VisibilityAgg[1], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}" />
+            </TabItem>
+
+            <TabItem
+                TabIndex="2"
+                Tag="{x:Static localCore:SettingsTabItem.Statistik}"
+                Visibility="{Binding Path=DataContext.VisibilityAgg[2], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}">
+                <TabItem.Header>
+                    <StackPanel Width="100" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource ResourceKey=TabHeaderTextBlockStyle}">
+                            <Run Text="Statistik" />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <localControls:TabStatisticsInfo Visibility="{Binding Path=DataContext.VisibilityAgg[2], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}" />
+            </TabItem>
+
+            <TabItem
+                TabIndex="3"
+                Tag="{x:Static localCore:SettingsTabItem.ApplicationInfo}"
+                Visibility="{Binding Path=DataContext.VisibilityAgg[3], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}">
+                <TabItem.Header>
+                    <StackPanel Width="100" Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource ResourceKey=TabHeaderTextBlockStyle}">
+                            <Run Text="Info" />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <localControls:TabApplicationInfo Visibility="{Binding Path=DataContext.VisibilityAgg[3], UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}}" />
+            </TabItem>
+        </TabControl>
+
+    </libWPF:SimpleGrid>
+</Window>

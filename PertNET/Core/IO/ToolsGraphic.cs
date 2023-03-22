@@ -19,11 +19,13 @@ namespace PertNET.Core
     using System;
     using System.Drawing;
     using System.IO;
+    using System.Runtime.Versioning;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
     using EasyPrototypingNET.Graphics;
 
+    [SupportedOSPlatform("windows")]
     public class ToolsGraphic
     {
         private static readonly object _Lock = new object();

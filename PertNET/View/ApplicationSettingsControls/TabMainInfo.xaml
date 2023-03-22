@@ -1,0 +1,102 @@
+﻿<UserControl
+    x:Class="PertNET.View.TabMainInfo"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:PertNET.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <libWPF:SimpleGrid
+        Margin="5"
+        Columns="*"
+        Rows="Auto,*, 50">
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Margin="5,0,0,10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            FontWeight="Bold"
+            Text="Allgemeine Einstellungen zur Applikation" />
+
+        <libWPF:SimpleGrid
+            Grid.Row="1"
+            Grid.Column="0"
+            Columns="140,*"
+            Rows="Auto,Auto,Auto">
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="5,0,0,10"
+                HorizontalAlignment="Left"
+                FontWeight="Medium"
+                Text="Beim Programm beenden Position speichern"
+                TextWrapping="Wrap" />
+
+            <libWPF:CheckBoxEx
+                Grid.Row="0"
+                Grid.Column="1"
+                IsChecked="{Binding Path=ApplicationPosition, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="5,0,0,10"
+                VerticalAlignment="Center"
+                FontWeight="Medium"
+                Text="Soll beim Beenden ein Abfragedialog angezeigt werden?"
+                TextWrapping="Wrap" />
+
+            <libWPF:CheckBoxEx
+                Grid.Row="1"
+                Grid.Column="1"
+                IsChecked="{Binding Path=ExitQuestion, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="5,0,0,10"
+                VerticalAlignment="Center"
+                FontWeight="Medium"
+                Text="Soll vor dem Start eine Datenbanksicherung erstellt werden?"
+                TextWrapping="Wrap" />
+
+            <libWPF:CheckBoxEx
+                Grid.Row="2"
+                Grid.Column="1"
+                IsChecked="{Binding Path=IsBackupDatabase, UpdateSourceTrigger=PropertyChanged}" />
+        </libWPF:SimpleGrid>
+
+
+        <DockPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="0,8,0,8"
+            VerticalAlignment="Bottom"
+            Background="{x:Null}">
+
+            <libWPF:ButtonEx
+                x:Name="BtnSaveButton"
+                Width="70"
+                Height="22"
+                Margin="0,0,8,0"
+                Padding="6"
+                HorizontalAlignment="Right"
+                Command="{Binding Path=CmdAgg[SaveCommand]}"
+                Content="{StaticResource ResourceKey=fntSaveDatabase}"
+                DockPanel.Dock="Right"
+                FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                FontSize="18"
+                FontWeight="ExtraBold"
+                IsDefault="False"
+                KeyboardNavigation.IsTabStop="False"
+                ToolTip="Änderung speichern"
+                Visibility="Visible" />
+        </DockPanel>
+    </libWPF:SimpleGrid>
+</UserControl>

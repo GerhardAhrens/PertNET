@@ -20,6 +20,7 @@ namespace PertNET.Core
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
@@ -31,6 +32,7 @@ namespace PertNET.Core
     /// <summary>
     /// Interaktionslogik für FileTargetFolderView.xaml
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public partial class FileTargetFolderView : Window, INotifyPropertyChanged
     {
         private string selectFolderValue;

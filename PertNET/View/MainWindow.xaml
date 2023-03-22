@@ -1,0 +1,741 @@
+﻿<Window
+    x:Class="PertNET.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:libCore="clr-namespace:EasyPrototypingNET.Core;assembly=EasyPrototypingNET"
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET"
+    xmlns:libConverter="clr-namespace:EasyPrototypingNET.WPF.Converter;assembly=EasyPrototypingNET"
+    xmlns:local="clr-namespace:PertNET"
+    xmlns:localConverter="clr-namespace:PertNET.Converter"
+    xmlns:localUI="clr-namespace:PertNET.Core.UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodel="clr-namespace:PertNET.ViewModel"
+    x:Name="nameMainWindow"
+    Title="PERT Effort Calc"
+    Width="900"
+    Height="500"
+    libWPF:ActionDialogClosing.RaiseClosingHandler="True"
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowVM}"
+    Style="{DynamicResource ResourceKey=CustomWindowStyle}"
+    TextOptions.TextFormattingMode="Display"
+    WindowStartupLocation="Manual"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <libConverter:BooleanToVisibilityConverter x:Key="BoolToVisibilityCoverter" />
+        <libConverter:BooleanToVisibilityInvertedConverter x:Key="BoolToVisibilityInversCoverter" />
+        <libConverter:RowNumberConverter x:Key="rowNumberConverter" />
+        <libConverter:MaxWidthConverter x:Key="maxWidthConverter" />
+        <localConverter:PERTValueConverter x:Key="PERTValueConverter" />
+        <libConverter:RangeToColorConverter x:Key="RangeToColorConverter" />
+
+        <Style x:Key="CustomWindowStyle" TargetType="{x:Type Window}">
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome
+                        CaptionHeight="30"
+                        CornerRadius="5"
+                        GlassFrameThickness="0"
+                        NonClientFrameEdges="None"
+                        ResizeBorderThickness="5"
+                        UseAeroCaptionButtons="False" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="LightBlue" />
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Grid>
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="5,30,5,5">
+                                <AdornerDecorator>
+                                    <ContentPresenter />
+                                </AdornerDecorator>
+                            </Border>
+
+                            <DockPanel
+                                Height="30"
+                                VerticalAlignment="Top"
+                                LastChildFill="False">
+
+                                <Image
+                                    Width="24"
+                                    Height="24"
+                                    Margin="5,0,0,0"
+                                    Source="/ApplicationIcon.ico" />
+
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    FontSize="16"
+                                    FontWeight="Medium"
+                                    Foreground="Blue"
+                                    Text="{Binding Path=ApplicationVersion}" />
+
+                                <Button
+                                    x:Name="btnClose"
+                                    Width="Auto"
+                                    Margin="3,0,15,0"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{Binding Path=CmdAgg[WindowCloseCommand]}"
+                                    Content="{StaticResource ResourceKey=fntChromeWindowClose}"
+                                    DockPanel.Dock="Right"
+                                    FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                                    FontSize="20"
+                                    ToolTip="Beenden"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+
+                                <Button
+                                    x:Name="btnRestore"
+                                    Width="Auto"
+                                    Margin="3"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="MaximizeRestoreClick"
+                                    Content="{StaticResource ResourceKey=fntChromeWindowMaximize}"
+                                    DockPanel.Dock="Right"
+                                    FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                                    FontSize="20"
+                                    ToolTip="Fenter vergrößern"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnMinimize"
+                                    Width="15"
+                                    Margin="3"
+                                    VerticalContentAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="MinimizeClick"
+                                    Content="{StaticResource ResourceKey=fntChromeWindowMinimize}"
+                                    DockPanel.Dock="Right"
+                                    FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                                    FontSize="20"
+                                    ToolTip="Fenter verkleinern"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnHelp"
+                                    Width="40"
+                                    Margin="5"
+                                    VerticalContentAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{Binding Path=CmdAgg[HelpCommand]}"
+                                    Content="Hilfe"
+                                    DockPanel.Dock="Right"
+                                    FontWeight="Bold"
+                                    ToolTip="Hilfe aufrufen (oder F1 drücken)"
+                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+
+                                <Button
+                                    x:Name="btnMenu"
+                                    Width="40"
+                                    Margin="5"
+                                    VerticalContentAlignment="Bottom"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Click="OnContextMenuClick"
+                                    DockPanel.Dock="Right"
+                                    ToolTip="Menü anzeigen"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Button.Content>
+                                        <Path
+                                            x:Name="BtnArrow"
+                                            Width="Auto"
+                                            Margin="4"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                            Fill="Blue"
+                                            Stretch="Uniform" />
+                                    </Button.Content>
+
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding Path=CmdAgg[NewDatabaseCommand]}" Header="Neue Datenbank">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntNewDatabase}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[OpenDatabaseCommand]}" Header="Öffnen Datenbank (Ctrl-O)">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntOpenDatabase}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[CloseDatabaseCommand]}" Header="Schließen Datenbank">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntCloseDatabase}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[SaveAsDatabaseCommand]}" Header="Speichern Datenbank unter ...">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntSaveDatabase}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <Separator />
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[AddEntryCommand]}" Header="Neuer Eintrag (Ctrl-N)">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntAddEntry}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[EditEntryCommand]}" Header="Ändern Eintrag (Ctrl-E)">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntEditEntry}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[DeleteEntryCommand]}" Header="Lösche Eintrag (Delete)">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntDeleteEntry}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[CopyEntryCommand]}" Header="Kopiere Eintrag (Strg-C)">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntCopyEntry}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <Separator />
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[ExportCommand]}" Header="Export">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntExport}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <Separator />
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[SettingsCommand]}" Header="Einstellungen">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntSettings}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                            </DockPanel>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContextMenu}">
+                        <Border
+                            Margin="0,5"
+                            Background="Snow"
+                            BorderBrush="DarkGray"
+                            BorderThickness="2"
+                            CornerRadius="4"
+                            Opacity="0.96">
+                            <StackPanel
+                                Margin="5,5,5,4"
+                                ClipToBounds="True"
+                                IsItemsHost="True"
+                                Orientation="Vertical" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <libWPF:CommandReference x:Key="WindowCloseCmdKey" Command="{Binding Path=CmdAgg[WindowCloseCommand]}" />
+        <libWPF:CommandReference x:Key="HelpCmdKey" Command="{Binding Path=CmdAgg[HelpCommand]}" />
+        <libWPF:CommandReference x:Key="OpenDatabaseCmdKey" Command="{Binding Path=CmdAgg[OpenDatabaseCommand]}" />
+        <libWPF:CommandReference x:Key="AddEntryCmdKey" Command="{Binding Path=CmdAgg[AddEntryCommand]}" />
+        <libWPF:CommandReference x:Key="EditEntryCmdKey" Command="{Binding Path=CmdAgg[EditEntryCommand]}" />
+        <libWPF:CommandReference x:Key="CopyEntryCmdKey" Command="{Binding Path=CmdAgg[CopyEntryCommand]}" />
+        <libWPF:CommandReference x:Key="DeleteEntryCmdKey" Command="{Binding Path=CmdAgg[DeleteEntryCommand]}" />
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="X"
+            Command="{StaticResource ResourceKey=WindowCloseCmdKey}"
+            Modifiers="Alt" />
+
+        <KeyBinding
+            Key="F1"
+            Command="{StaticResource ResourceKey=HelpCmdKey}"
+            Modifiers="" />
+
+        <KeyBinding
+            Key="O"
+            Command="{StaticResource ResourceKey=OpenDatabaseCmdKey}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="N"
+            Command="{StaticResource ResourceKey=AddEntryCmdKey}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="E"
+            Command="{StaticResource ResourceKey=EditEntryCmdKey}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="C"
+            Command="{StaticResource ResourceKey=CopyEntryCmdKey}"
+            Modifiers="Ctrl" />
+
+        <KeyBinding
+            Key="Delete"
+            Command="{StaticResource ResourceKey=DeleteEntryCmdKey}"
+            Modifiers="" />
+    </Window.InputBindings>
+
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <!--#region  Suchfilter-->
+        <libWPF:SimpleGrid
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="5,0"
+            Columns="Auto,250,*">
+
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="Filter:" />
+
+            <libWPF:TextBoxEx
+                Grid.Column="1"
+                Width="200"
+                Margin="5,0"
+                HorizontalAlignment="Left"
+                Text="{Binding Path=FilterDefaultSearch, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Border
+                Grid.Row="0"
+                Grid.Column="2"
+                BorderBrush="Blue"
+                BorderThickness="1">
+                <libWPF:SimpleGrid
+                    Margin="5,0"
+                    Columns="120,120,120, 120"
+                    Rows="Auto,Auto, Auto">
+                    <StackPanel
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Orientation="Horizontal">
+                        <TextBlock FontWeight="Medium" Text="Gesamtaufwand in PT für: " />
+
+                        <TextBlock
+                            FontWeight="Medium"
+                            Foreground="Blue"
+                            Text="{Binding Path=ProjectName}" />
+                    </StackPanel>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalAlignment="Center">
+                        <Run Text="optimistisch" />
+                        <Run Text=":" />
+                        <Run Foreground="Blue" Text="{Binding Path=MinFullEffort}" />
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalAlignment="Center">
+                        <Run Text="wahrscheinlich" />
+                        <Run Text=":" />
+                        <Run Foreground="Blue" Text="{Binding Path=MidFullEffort}" />
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        VerticalAlignment="Center">
+                        <Run Text="pessimistisch" />
+                        <Run Text=":" />
+                        <Run Foreground="Blue" Text="{Binding Path=MaxFullEffort}" />
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        VerticalAlignment="Center">
+                        <Run Text="PERT" />
+                        <Run Text=":" />
+                        <Run
+                            FontWeight="Bold"
+                            Foreground="Blue"
+                            Text="{Binding Path=PERTFullEffort}" />
+                    </TextBlock>
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center">
+                        <Run Text="Letzte Änderung" />
+                        <Run Text=":" />
+                        <Run Foreground="Blue" Text="{Binding Path=LastEdit, UpdateSourceTrigger=PropertyChanged}" />
+                    </TextBlock>
+
+                </libWPF:SimpleGrid>
+            </Border>
+
+        </libWPF:SimpleGrid>
+        <!--#endregion Suchfilter-->
+
+        <!--#region Keine Daten zum Filter gefunden-->
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Panel.ZIndex="1"
+            Orientation="Horizontal"
+            Visibility="{Binding Path=IsFilterContentFound, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource ResourceKey=BoolToVisibilityCoverter}}">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="18"
+                FontWeight="Bold">
+                <Run
+                    FontFamily="{StaticResource FontAW5FR}"
+                    FontSize="28"
+                    Foreground="Blue"
+                    Text="{StaticResource ResourceKey=fntSmile}" />
+                <Run Text="{StaticResource ResourceKey=StrFilterNotFound1}" />
+                <LineBreak />
+                <Run
+                    FontFamily="{StaticResource FontAW5FR}"
+                    FontSize="28"
+                    Foreground="Green"
+                    Text="{StaticResource ResourceKey=fntKeyboard}" />
+                <Run Text="{StaticResource ResourceKey=StrFilterNotFound2}" />
+            </TextBlock>
+        </StackPanel>
+        <!--#endregion Keine Daten zum Filter gefunden-->
+
+        <!--#region ListView Definition-->
+        <ListView
+            Name="lvwMain"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            libWPF:ListViewSort.AutoSort="True"
+            Background="WhiteSmoke"
+            ItemContainerStyle="{StaticResource ResourceKey=lvwItemContainerStyle}"
+            ItemsSource="{Binding Path=DialogDataView, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding Path=CurrentSelectedItem, UpdateSourceTrigger=PropertyChanged}"
+            SelectionMode="Extended"
+            Style="{StaticResource ResourceKey=lvwMainStyle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[EditEntryCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />
+                </i:EventTrigger>
+
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[SelectionChangedCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItems}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <ListView.ContextMenu>
+                <ContextMenu Focusable="True" IsEnabled="{Binding Path=IsContextMenuEnabled, UpdateSourceTrigger=PropertyChanged}">
+                    <MenuItem Command="{Binding Path=CmdAgg[AddSubEntryCommand]}" Header="{Binding Path=MenuTextAddSub, UpdateSourceTrigger=PropertyChanged}">
+                        <MenuItem.Icon>
+                            <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntAddSubEntry}}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <Separator />
+
+                    <MenuItem Command="{Binding Path=CmdAgg[EditEntryCommand]}" Header="{Binding Path=MenuTextEdit, UpdateSourceTrigger=PropertyChanged}">
+                        <MenuItem.Icon>
+                            <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntEditEntry}}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding Path=CmdAgg[CopyEntryCommand]}" Header="Kopieren Eintrag">
+                        <MenuItem.Icon>
+                            <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntCopyEntry}}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding Path=CmdAgg[DeleteEntryCommand]}" Header="Lösche Eintrag">
+                        <MenuItem.Icon>
+                            <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntDeleteEntry}}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+
+            <ListView.InputBindings>
+                <KeyBinding
+                    Key="F1"
+                    Command="{Binding Path=CmdAgg[HelpCommand]}"
+                    Modifiers="" />
+
+                <KeyBinding
+                    Key="Enter"
+                    Command="{Binding Path=DataContext.CmdAgg[EditEntryCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"
+                    CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItem}" />
+            </ListView.InputBindings>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="40">
+                        <GridViewColumn.Header>
+                            <Grid>
+                                <libWPF:ButtonEx
+                                    Width="25"
+                                    Height="25"
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding Path=CmdAgg[ClearFilterCommand]}"
+                                    Content="{StaticResource ResourceKey=fntDelete2}"
+                                    FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                                    FontSize="22"
+                                    KeyboardNavigation.IsTabStop="False"
+                                    ToolTip="Filter löschen (or Ctrl-D)" />
+                            </Grid>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Transparent" BorderThickness="0">
+                                    <Grid Margin="2">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="Gray"
+                                            TextAlignment="Right">
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource rowNumberConverter}">
+                                                    <Binding />
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListView}}" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="50"
+                        libWPF:ListViewSort.PropertyName="IsSelected"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}">
+                        <GridViewColumnHeader AllowDrop="False">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Foreground="Black"
+                                    Text="{Binding Path=SelectedRowHeader, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                                <libWPF:CheckBoxEx
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Center"
+                                    Focusable="False"
+                                    IsChecked="{Binding Path=AllItemsChecked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    IsEnabled="{Binding Path=IsDatabaseOpen}" />
+
+                            </Grid>
+                        </GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <libWPF:CheckBoxEx IsChecked="{Binding Path=IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[CheckBoxCheckedCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding Path=DataContext.CmdAgg[CheckBoxCheckedCommand], RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" CommandParameter="{Binding ElementName=lvwMain, Path=SelectedItems}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </libWPF:CheckBoxEx>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="100"
+                        libWPF:ListViewSort.PropertyName="ChapterA"
+                        Header="Aufwandspunkt"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Background="{Binding Path=BackgroundColor}"
+                                    FontWeight="Normal"
+                                    Text="{Binding Path=Chapter}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="350"
+                        libWPF:ListViewSort.PropertyName="Title"
+                        DisplayMemberBinding="{Binding Path=Title}"
+                        Header="Titel"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="75"
+                        libWPF:ListViewSort.PropertyName="Min"
+                        DisplayMemberBinding="{Binding Path=Min}"
+                        Header="optimistisch"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="90"
+                        libWPF:ListViewSort.PropertyName="Mid"
+                        DisplayMemberBinding="{Binding Path=Mid}"
+                        Header="wahrscheinlich"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="80"
+                        libWPF:ListViewSort.PropertyName="Max"
+                        DisplayMemberBinding="{Binding Path=Max}"
+                        Header="pessimistisch"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="50"
+                        libWPF:ListViewSort.PropertyName="Factor"
+                        Header="Faktor"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    FontWeight="Bold"
+                                    Foreground="{Binding Path=Factor, Converter={StaticResource ResourceKey=RangeToColorConverter}}"
+                                    Text="{Binding Path=Factor}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="80"
+                        Header="PERT"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontWeight="Bold" Foreground="Blue">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource ResourceKey=PERTValueConverter}">
+                                            <Binding Path="Min" />
+                                            <Binding Path="Mid" />
+                                            <Binding Path="Max" />
+                                            <Binding Path="Factor" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn
+                        Width="150"
+                        libWPF:ListViewSort.PropertyName="Tag"
+                        DisplayMemberBinding="{Binding Path=Tag}"
+                        Header="Tag"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+
+                    <GridViewColumn
+                        Width="210"
+                        libWPF:ListViewSort.PropertyName="Timestamp"
+                        DisplayMemberBinding="{Binding Path=Timestamp}"
+                        Header="Letzte Änderung"
+                        HeaderContainerStyle="{StaticResource lvwHeaderLeft}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--#endregion ListView Definition-->
+
+        <!--#region Statuszeile-->
+        <StatusBar
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Background="Transparent"
+            FontSize="13">
+            <StatusBarItem DockPanel.Dock="Left">
+                <TextBlock Margin="2,0,0,0">
+                    <Run
+                        FontFamily="{StaticResource ResourceKey=FontAW5FR}"
+                        FontWeight="Bold"
+                        Text="{StaticResource ResourceKey=fntStatusbarUser}" />
+                    <Run Text=":" />
+                    <Run FontWeight="Normal" Text="{x:Static sys:Environment.UserDomainName}" />
+                    <Run Text="\" />
+                    <Run FontWeight="Normal" Text="{x:Static sys:Environment.UserName}" />
+                </TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem DockPanel.Dock="Right">
+                <TextBlock Margin="2,0,0,0">
+                    <Run
+                        FontFamily="{StaticResource ResourceKey=FontAW5FR}"
+                        FontWeight="Bold"
+                        Text="{StaticResource ResourceKey=fntStatusbarClock}" />
+                    <Run Text=":" />
+                    <Run x:Name="dtStatusBarDate" />
+                </TextBlock>
+            </StatusBarItem>
+
+            <Separator Background="Transparent" />
+
+            <StatusBarItem x:Name="sbiMonitor" DockPanel.Dock="Left">
+                <TextBlock Margin="2,0,0,0">
+                    <Run
+                        FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                        FontWeight="Bold"
+                        Text="{StaticResource ResourceKey=fntStatusbarMonitorSize}" />
+                    <Run Text=":" />
+                    <Run x:Name="tbMonitorSize" />
+                    <Run Text="; Dokument: =&gt;" />
+                    <Run Text="{Binding Path=StatuslineDescription}" />
+                </TextBlock>
+            </StatusBarItem>
+
+        </StatusBar>
+        <!--#endregion Statuszeile-->
+    </Grid>
+</Window>

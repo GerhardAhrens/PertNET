@@ -5,11 +5,11 @@
 // </copyright>
 //
 // <author>Gerhard Ahrens - Lifeprojects.de</author>
-// <email>gerhard.ahrens@lifeprojects.de</email>
+// <email>developer@lifeprojects.de</email>
 // <date>13.02.2019</date>
 //
 // <summary>
-// Class for create Font Symbols
+//      Class for create Font Symbols
 // </summary>
 //-----------------------------------------------------------------------
 

@@ -20,6 +20,7 @@ namespace PertNET.DataRepository
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Runtime.Versioning;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Pattern;
@@ -29,6 +30,7 @@ namespace PertNET.DataRepository
     using PertNET.Core;
     using PertNET.Model;
 
+    [SupportedOSPlatform("windows")]
     public sealed class DatabaseManager : DisposableBase
     {
         public DatabaseManager(string databaseFile)

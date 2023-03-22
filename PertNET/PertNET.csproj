@@ -30,9 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
-    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
-    <EmbeddedResource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
+    <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
+    <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.jpg" />
   </ItemGroup>
@@ -56,6 +56,7 @@
     <Folder Include="Core\Enums\" />
     <Folder Include="Core\EventArgs\" />
     <Folder Include="Core\ApplicationHotKeys\" />
+    <Folder Include="Core\Collection\" />
     <Folder Include="Core\Validations\" />
     <Folder Include="Core\Settings\" />
     <Folder Include="Core\UI\" />
@@ -63,7 +64,9 @@
     <Folder Include="Extension\" />
     <Folder Include="Resources\HelpText\" />
     <Folder Include="Resources\Style\" />
+    <Folder Include="ViewModel\ApplicationSettingsControls\" />
     <Folder Include="View\Calculator\" />
+    <Folder Include="View\ApplicationSettingsControls\" />
   </ItemGroup>
 
   <ItemGroup>

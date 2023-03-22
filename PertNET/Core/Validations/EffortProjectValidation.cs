@@ -18,9 +18,9 @@ namespace PertNET.Core
 {
     using System;
     using System.Linq.Expressions;
-    using System.Text.RegularExpressions;
 
     using EasyPrototypingNET.LinqExpressions;
+    using EasyPrototypingNET.Pattern;
 
     public class EffortProjectValidation<TViewModel> where TViewModel : class
     {
@@ -35,37 +35,42 @@ namespace PertNET.Core
             return validation;
         }
 
-        public string NotEmpty(Expression<Func<TViewModel, object>> expression, string message)
+        public Result<string> NotEmpty(Expression<Func<TViewModel, object>> expression, string message)
         {
             string result = string.Empty;
+            bool resultValidError = false;
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             string propertyValue = (string)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject);
 
             if (string.IsNullOrEmpty(propertyValue) == true)
             {
                 result = $"Das Feld '{message}' darf nicht leer sein.";
+                resultValidError = true;
             }
 
-            return result;
+            return Result<string>.SuccessResult(result, resultValidError);
         }
 
-        public string InRangeChapter(Expression<Func<TViewModel, object>> expression, int min, int max)
+        public Result<string> InRangeChapter(Expression<Func<TViewModel, object>> expression, int min, int max)
         {
             string result = string.Empty;
+            bool resultValidError = false;
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             int propertyValue = (int)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject, null);
 
             if (propertyValue.InRange(min, max) == false)
             {
                 result = $"Der Wert für die Kapitelnummerierung muß zwischen {min} und {max} liegen";
+                resultValidError = true;
             }
 
-            return result;
+            return Result<string>.SuccessResult(result, resultValidError);
         }
 
-        public string ValueGreaterThanZero(Expression<Func<TViewModel, object>> expression, double min, double max = 999)
+        public Result<string> ValueGreaterThanZero(Expression<Func<TViewModel, object>> expression, double min, double max = 999)
         {
             string result = string.Empty;
+            bool resultValidError = false;
             string propertyName = ExpressionPropertyName.For<TViewModel>(expression);
             string propertyValue = (string)validation.ThisObject.GetType().GetProperty(propertyName).GetValue(validation.ThisObject, null);
 
@@ -74,6 +79,7 @@ namespace PertNET.Core
                 if (Convert.ToDouble(propertyValue).Between(min, max) == false)
                 {
                     result = $"Der Wert für Aufwand muß größer {min} sein";
+                    resultValidError = true;
                 }
                 else
                 {
@@ -83,6 +89,7 @@ namespace PertNET.Core
                     else
                     {
                         result = $"Es können nur Schritte mit '0,25' eingegeben werden";
+                        resultValidError = true;
                     }
 
                 }
@@ -90,9 +97,10 @@ namespace PertNET.Core
             else
             {
                 result = $"Der Wert für Aufwand muß größer {min} sein";
+                resultValidError = true;
             }
 
-            return result;
+            return Result<string>.SuccessResult(result, resultValidError);
         }
 
         public string CheckValueStep25(Expression<Func<TViewModel, object>> expression, double step = 0.25)
