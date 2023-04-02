@@ -22,6 +22,7 @@ namespace PertNET.Core.ApplicationHotKeys
     using System.Windows;
     using System.Windows.Input;
 
+    using EasyPrototypingNET.Core;
     using EasyPrototypingNET.WPF;
 
     using PertNET.View;

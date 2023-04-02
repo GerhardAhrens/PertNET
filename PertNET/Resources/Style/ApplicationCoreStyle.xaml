@@ -1,9 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="TextBoxMultiLineStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="SpellCheck.IsEnabled" Value="True" />
         <Setter Property="AcceptsReturn" Value="True" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="MaxLines" Value="3" />
+        <Setter Property="MaxLines" Value="10" />
+        <Setter Property="MinLines" Value="10" />
+        <Setter Property="MaxLength" Value="1000" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Top" />

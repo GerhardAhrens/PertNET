@@ -44,12 +44,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="EasyPrototypingNET">
-      <HintPath>..\_Lib\EasyPrototypingNET.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Converter\" />
     <Folder Include="Core\IO\" />
     <Folder Include="Core\FileTargetFolder\" />
@@ -73,6 +67,12 @@
     <PackageReference Include="LiteDB" Version="5.0.16" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="System.Management" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EasyPrototypingNET">
+      <HintPath>..\_Lib\EasyPrototypingNET.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

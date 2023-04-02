@@ -28,6 +28,7 @@ namespace PertNET.ViewModel
 
     using PertNET.Core;
     using PertNET.DataRepository;
+    using PertNET.View;
 
     public partial class MainWindowVM : ViewModelBase<MainWindowVM>, IViewModel
     {
@@ -52,14 +53,12 @@ namespace PertNET.ViewModel
                     SwitchAnimations.FadeOut();
 
                     EffortProjectVM vm = new EffortProjectVM(Guid.Empty, false, false);
-                    /*
                     ws.Title = "Neuer Eintrag";
                     ws.ResizeMode = ResizeMode.NoResize;
                     ws.WindowStyle = WindowStyle.None;
                     ws.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                     bool? dlgResult = ws.ShowDialog<EffortProjectView>(vm, this.mainWindow, MonitorSelect.Primary);
                     SwitchAnimations.FadeIn();
-                    */
                 }
 
                 this.LoadData();
@@ -130,33 +129,21 @@ namespace PertNET.ViewModel
             try
             {
                 int currentPos = this.DialogDataView.CurrentPosition;
-                /*
-                SwitchAnimations.FadeOut();
-                EffortProjectView dlg = new EffortProjectView(this.CurrentSelectedItem);
-                dlg.Owner = Application.Current.MainWindow;
-                dlg.Title = $"Eintrag ändern [{this.CurrentSelectedItem.FullName}]";
-                dlg.ResizeMode = ResizeMode.NoResize;
-                dlg.WindowStyle = WindowStyle.None;
-                dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                bool? dlgResult = dlg.ShowDialog();
-                SwitchAnimations.FadeIn();
-                */
-                /*
+
                 using (DialogService ws = new DialogService())
                 {
                     SwitchAnimations.FadeOut();
 
                     EffortProjectVM vm = new EffortProjectVM(this.CurrentSelectedItem.Id, false, false);
 
-                    ws.ResultContent = this.CurrentSelectedItem.Id;
+                    //ws.ResultContent = this.CurrentSelectedItem.Id;
                     ws.Title = $"Eintrag ändern [{this.CurrentSelectedItem.FullName}]";
                     ws.ResizeMode = ResizeMode.NoResize;
                     ws.WindowStyle = WindowStyle.None;
                     ws.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    bool? dlgResult = ws.ShowDialog<EffortProjectView>(null, this.mainWindow, MonitorSelect.Primary);
+                    bool? dlgResult = ws.ShowDialog<EffortProjectView>(vm, this.mainWindow);
                     SwitchAnimations.FadeIn();
                 }
-                */
 
                 this.LoadData();
                 this.DialogDataView.MoveCurrentToPosition(currentPos);
@@ -246,7 +233,7 @@ namespace PertNET.ViewModel
                     ws.ResizeMode = ResizeMode.NoResize;
                     ws.WindowStyle = WindowStyle.None;
                     ws.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                    //bool? dlgResult = ws.ShowDialog<EffortProjectView>(vm, this.mainWindow, MonitorSelect.Primary);
+                    bool? dlgResult = ws.ShowDialog<EffortProjectView>(vm, this.mainWindow, MonitorSelect.Primary);
                     SwitchAnimations.FadeIn();
                 }
 
