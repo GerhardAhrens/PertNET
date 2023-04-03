@@ -404,7 +404,7 @@ namespace PertNET.ViewModel
 
                     EffortProject selectedItem = itemsCollection.FirstOrDefault();
 
-                    this.MenuTextAddSub = $"Untereintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} erstellen";
+                    this.MenuTextAddSub = $"Einfügen nach {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} erstellen";
                     this.MenuTextEdit = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} ändern";
                     this.MenuTextDelete = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} löschen";
                     this.MenuTextCopy = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} kopieren";

@@ -28,6 +28,7 @@ namespace PertNET.ViewModel
 
     using PertNET.Core;
     using PertNET.DataRepository;
+    using PertNET.Model;
     using PertNET.View;
 
     public partial class MainWindowVM : ViewModelBase<MainWindowVM>, IViewModel
@@ -87,23 +88,7 @@ namespace PertNET.ViewModel
             try
             {
                 int currentPos = this.DialogDataView.CurrentPosition;
-                /*
-                SwitchAnimations.FadeOut();
-                EffortProjectView dlg = new EffortProjectView(this.CurrentSelectedItem, true);
-                dlg.Owner = Application.Current.MainWindow;
-                dlg.Title = $"Eintrag hinzufügen [{this.CurrentSelectedItem.FullName}]";
-                dlg.ResizeMode = ResizeMode.NoResize;
-                dlg.WindowStyle = WindowStyle.None;
-                dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                bool? dlgResult = dlg.ShowDialog();
-                if (dlgResult.HasValue == true && dlgResult == true)
-                {
-                    this.LoadData();
-                    this.DialogDataView.MoveCurrentToPosition(currentPos);
-                }
-                */
-
-                SwitchAnimations.FadeIn();
+                int chapterA = this.DialogDataView.CurrentItem.CastTo<EffortProject>().ChapterA;
             }
             catch (Exception ex)
             {
