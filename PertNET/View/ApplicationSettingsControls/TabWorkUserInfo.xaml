@@ -61,7 +61,7 @@
                 Text="{Binding Path=Firstname, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="Vorname" WatermarkStyle="{StaticResource ResourceKey=StyleWatermarkLabel}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=StyleWatermarkLabel}" WatermarkText="Vorname" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -76,7 +76,7 @@
                 Text="{Binding Path=Lastname, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="Nachname" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Nachname" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -97,7 +97,7 @@
                 Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="EMail-Adresse" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="EMail-Adresse" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -117,7 +117,7 @@
                 Text="{Binding Path=UserId, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="UserId" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="UserId" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -138,7 +138,7 @@
                 Text="{Binding Path=Company, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="Für Kunde" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Für Kunde" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -159,7 +159,7 @@
                 Text="{Binding Path=ProjectName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                 <i:Interaction.Behaviors>
                     <wpfBehavior:TabOnEnterBehavior />
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="Projektbezeichnung" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Projektbezeichnung" />
                 </i:Interaction.Behaviors>
             </libWPF:TextBoxEx>
 
@@ -168,7 +168,7 @@
                 Grid.Column="0"
                 Text="Beschreibung" />
 
-            <libWPF:TextBoxEx
+            <libWPF:MultilineTextBox
                 Grid.Row="5"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
@@ -178,14 +178,12 @@
                 VerticalAlignment="Top"
                 VerticalContentAlignment="Top"
                 KeyboardNavigation.TabIndex="15"
-                MaxLength="1000"
-                MaxLines="5"
                 Style="{StaticResource ResourceKey=TextBoxMultiLineStyle}"
                 Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Behaviors>
-                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkText="Zusätzliche Beschreibung" WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" />
+                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Zusätzliche Beschreibung" />
                 </i:Interaction.Behaviors>
-            </libWPF:TextBoxEx>
+            </libWPF:MultilineTextBox>
 
             <TextBlock
                 Grid.Row="6"
