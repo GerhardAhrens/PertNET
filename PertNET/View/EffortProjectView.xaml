@@ -199,16 +199,15 @@
                             <libWPF:CheckBoxEx IsChecked="{Binding Path=ShowDescription, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
-                        <libWPF:TextBoxEx
+                        <libWPF:MultilineTextBox
                             Width="550"
                             Height="60"
                             KeyboardNavigation.TabIndex="14"
-                            Style="{StaticResource ResourceKey=TextBoxMultiLineStyle}"
                             Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Behaviors>
                                 <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Zusätzliche Beschreibung" />
                             </i:Interaction.Behaviors>
-                        </libWPF:TextBoxEx>
+                        </libWPF:MultilineTextBox>
                     </StackPanel>
 
                     <StackPanel
