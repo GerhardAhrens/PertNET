@@ -21,6 +21,8 @@
     <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <None Remove="Resources\HelpText\Help_EffortProjectVM.md" />
+    <None Remove="Resources\HelpText\Help_MainWindowVM.md" />
     <None Remove="Resources\Picture\ApplicationIcon.ico" />
     <None Remove="Resources\Picture\ApplicationIcon.jpg" />
   </ItemGroup>
@@ -33,6 +35,8 @@
     <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <EmbeddedResource Include="Resources\HelpText\Help_EffortProjectVM.md" />
+    <EmbeddedResource Include="Resources\HelpText\Help_MainWindowVM.md" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.jpg" />
   </ItemGroup>
@@ -56,7 +60,6 @@
     <Folder Include="Core\UI\" />
     <Folder Include="DataRepository\" />
     <Folder Include="Extension\" />
-    <Folder Include="Resources\HelpText\" />
     <Folder Include="Resources\Style\" />
     <Folder Include="ViewModel\ApplicationSettingsControls\" />
     <Folder Include="View\Calculator\" />
