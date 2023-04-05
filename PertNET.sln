@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Doc", "_Doc", "{CA306BFA-7
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PertNET.Export", "PertNET.Export\PertNET.Export.csproj", "{7C83497D-4D4E-4092-A4D4-37C3D2797159}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PertNET.Export", "PertNET.Export\PertNET.Export.csproj", "{7C83497D-4D4E-4092-A4D4-37C3D2797159}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PertNET.Test", "PertNET.Test\PertNET.Test.csproj", "{B4CDB3F6-534B-4DB7-97C8-9474DAB18A22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C83497D-4D4E-4092-A4D4-37C3D2797159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4CDB3F6-534B-4DB7-97C8-9474DAB18A22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4CDB3F6-534B-4DB7-97C8-9474DAB18A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4CDB3F6-534B-4DB7-97C8-9474DAB18A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4CDB3F6-534B-4DB7-97C8-9474DAB18A22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
