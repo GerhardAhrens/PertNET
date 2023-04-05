@@ -59,7 +59,6 @@
     <Folder Include="Core\Settings\" />
     <Folder Include="Core\UI\" />
     <Folder Include="DataRepository\" />
-    <Folder Include="Extension\" />
     <Folder Include="Resources\Style\" />
     <Folder Include="ViewModel\ApplicationSettingsControls\" />
     <Folder Include="View\Calculator\" />
