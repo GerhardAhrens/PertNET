@@ -45,6 +45,84 @@ namespace PERT_Test.Core
         }
 
         [TestMethod]
+        public void InserNewChapterAsFirst()
+        {
+            List<ChapterContent> chapters = CreateChapterData();
+            Assert.IsTrue(chapters.Count == 11);
+
+            Assert.AreEqual(chapters[0].ToString(), "1.0.0");
+            Assert.AreEqual(chapters[1].ToString(), "2.0.0");
+            Assert.AreEqual(chapters[2].ToString(), "2.1.0");
+            Assert.AreEqual(chapters[3].ToString(), "3.0.0");
+            Assert.AreEqual(chapters[4].ToString(), "3.1.0");
+            Assert.AreEqual(chapters[5].ToString(), "3.2.0");
+            Assert.AreEqual(chapters[6].ToString(), "4.0.0");
+            Assert.AreEqual(chapters[7].ToString(), "4.1.0");
+            Assert.AreEqual(chapters[8].ToString(), "4.2.0");
+            Assert.AreEqual(chapters[9].ToString(), "5.0.0");
+            Assert.AreEqual(chapters[10].ToString(), "6.0.0");
+
+            Assert.IsFalse(IsDuplicateChapter(chapters));
+
+            ChapterContent insert1 = new ChapterContent() { ChapterA = 1, ChapterB = 0, ChapterC = 0, ChapterText = "Kapitel(1)-Neu", ChapterInsert = true };
+
+            List<ChapterContent> resultReNumber = ReNumberChapterInsert(chapters, insert1);
+            Assert.IsTrue(resultReNumber.Count == 12);
+
+            Assert.AreEqual(resultReNumber[0].ToString(), "1.0.0");
+            Assert.AreEqual(resultReNumber[1].ToString(), "2.0.0");
+            Assert.AreEqual(resultReNumber[2].ToString(), "3.0.0");
+            Assert.AreEqual(resultReNumber[3].ToString(), "3.1.0");
+            Assert.AreEqual(resultReNumber[4].ToString(), "4.0.0");
+            Assert.AreEqual(resultReNumber[5].ToString(), "4.1.0");
+            Assert.AreEqual(resultReNumber[6].ToString(), "4.2.0");
+            Assert.AreEqual(resultReNumber[7].ToString(), "5.0.0");
+            Assert.AreEqual(resultReNumber[8].ToString(), "5.1.0");
+            Assert.AreEqual(resultReNumber[9].ToString(), "5.2.0");
+            Assert.AreEqual(resultReNumber[10].ToString(), "6.0.0");
+            Assert.AreEqual(resultReNumber[11].ToString(), "7.0.0");
+        }
+
+        [TestMethod]
+        public void InserNewChapterAsLast()
+        {
+            List<ChapterContent> chapters = CreateChapterData();
+            Assert.IsTrue(chapters.Count == 11);
+
+            Assert.AreEqual(chapters[0].ToString(), "1.0.0");
+            Assert.AreEqual(chapters[1].ToString(), "2.0.0");
+            Assert.AreEqual(chapters[2].ToString(), "2.1.0");
+            Assert.AreEqual(chapters[3].ToString(), "3.0.0");
+            Assert.AreEqual(chapters[4].ToString(), "3.1.0");
+            Assert.AreEqual(chapters[5].ToString(), "3.2.0");
+            Assert.AreEqual(chapters[6].ToString(), "4.0.0");
+            Assert.AreEqual(chapters[7].ToString(), "4.1.0");
+            Assert.AreEqual(chapters[8].ToString(), "4.2.0");
+            Assert.AreEqual(chapters[9].ToString(), "5.0.0");
+            Assert.AreEqual(chapters[10].ToString(), "6.0.0");
+
+            Assert.IsFalse(IsDuplicateChapter(chapters));
+
+            ChapterContent insert1 = new ChapterContent() { ChapterA = 7, ChapterB = 0, ChapterC = 0, ChapterText = "Kapitel(1)-Neu", ChapterInsert = true };
+
+            List<ChapterContent> resultReNumber = ReNumberChapterInsert(chapters, insert1);
+            Assert.IsTrue(resultReNumber.Count == 12);
+
+            Assert.AreEqual(resultReNumber[0].ToString(), "1.0.0");
+            Assert.AreEqual(resultReNumber[1].ToString(), "2.0.0");
+            Assert.AreEqual(resultReNumber[2].ToString(), "2.1.0");
+            Assert.AreEqual(resultReNumber[3].ToString(), "3.0.0");
+            Assert.AreEqual(resultReNumber[4].ToString(), "3.1.0");
+            Assert.AreEqual(resultReNumber[5].ToString(), "3.2.0");
+            Assert.AreEqual(resultReNumber[6].ToString(), "4.0.0");
+            Assert.AreEqual(resultReNumber[7].ToString(), "4.1.0");
+            Assert.AreEqual(resultReNumber[8].ToString(), "4.2.0");
+            Assert.AreEqual(resultReNumber[9].ToString(), "5.0.0");
+            Assert.AreEqual(resultReNumber[10].ToString(), "6.0.0");
+            Assert.AreEqual(resultReNumber[11].ToString(), "7.0.0");
+        }
+
+        [TestMethod]
         public void InserNewChapter()
         {
             List<ChapterContent> chapters = CreateChapterData();
@@ -237,7 +315,9 @@ namespace PERT_Test.Core
                 }
             }
 
-            return chapters.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC).ToList();
+            chapters = chapters.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC).ToList();
+
+            return chapters;
         }
 
         [DebuggerDisplay("FullName={this.FullName}")]
