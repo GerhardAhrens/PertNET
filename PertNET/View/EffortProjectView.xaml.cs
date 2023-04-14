@@ -1,22 +1,18 @@
 ﻿
 namespace PertNET.View
 {
-    using EasyPrototypingNET.Interface;
-
-    using PERT.ViewModel;
-
-    using PertNET.Core;
-    using PertNET.Model;
-    using PertNET.ViewModel;
-
-    using System;
     using System.Collections.Generic;
     using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
 
-    using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+    using EasyPrototypingNET.Interface;
+
+    using PERT.ViewModel;
+
+    using PertNET.Core;
+
 
     /// <summary>
     /// Interaktionslogik für EffortProjectView.xaml
@@ -24,63 +20,28 @@ namespace PertNET.View
     [SupportedOSPlatform("windows")]
     public partial class EffortProjectView : Window
     {
-        private EffortProjectVM rootVM = null;
-        private bool setSubItem = false;
-
         public EffortProjectView()
         {
             this.InitializeComponent();
+            WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnLoaded);
 
-            if (rootVM == null)
+            App.EventAgg.Subscribe<TagInEventArgs<IViewModel>>(this.GetTextTag);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
             {
-                this.rootVM = new EffortProjectVM(Guid.Empty,false);
+                string tags = ((EffortProjectVM)this.DataContext).TagText;
+                this.SetTextTag(tags);
             }
-
-            App.EventAgg.Subscribe<TagInEventArgs<IViewModel>>(this.GetTextTag);
-            App.EventAgg.Subscribe<TagOutEventArgs<IViewModel>>(this.SetTextTag);
         }
-
-        public EffortProjectView(EffortProject currentItem)
-        {
-            this.InitializeComponent();
-            this.CurrentId = currentItem.Id;
-            this.setSubItem = false;
-
-            WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnWindowLoaded);
-
-            App.EventAgg.Subscribe<TagInEventArgs<IViewModel>>(this.GetTextTag);
-            App.EventAgg.Subscribe<TagOutEventArgs<IViewModel>>(this.SetTextTag);
-        }
-
-        public EffortProjectView(EffortProject currentItem, bool subItem = false)
-        {
-            this.InitializeComponent();
-            this.CurrentId = currentItem.Id;
-            this.setSubItem = subItem;
-
-            WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnWindowLoaded);
-
-            App.EventAgg.Subscribe<TagInEventArgs<IViewModel>>(this.GetTextTag);
-            App.EventAgg.Subscribe<TagOutEventArgs<IViewModel>>(this.SetTextTag);
-        }
-
-        private void OnWindowLoaded(object sender, RoutedEventArgs e)
-        {
-            if (rootVM == null)
-            {
-                this.rootVM = new EffortProjectVM(this.CurrentId, this.setSubItem,false);
-            }
-
-            this.DataContext = this.rootVM;
-        }
-
-        private Guid CurrentId { get; set; }
 
         private void GetTextTag(TagInEventArgs<IViewModel> obj)
         {
             List<string> labels = new List<string>();
 
-            foreach (var block in this.Tokenizer.Document.Blocks)
+            foreach (var block in this.TagViewControl.Document.Blocks)
             {
                 if (block is Paragraph)
                 {
@@ -100,7 +61,7 @@ namespace PertNET.View
 
             if (labels.Count > 0)
             {
-                string tags = string.Join(";", labels);
+                string tags = string.Join(",", labels);
                 if ((EffortProjectVM)this.DataContext != null)
                 {
                     ((EffortProjectVM)this.DataContext).TagText = tags;
@@ -109,18 +70,17 @@ namespace PertNET.View
         }
 
 
-        private void SetTextTag(TagOutEventArgs<IViewModel> obj)
+        private void SetTextTag(string tags)
         {
-            if (obj != null)
+            if (string.IsNullOrEmpty(tags) == false)
             {
-                this.Tokenizer.Document.Blocks.Clear();
-                this.Tokenizer.CaretPosition = this.Tokenizer.CaretPosition.GetPositionAtOffset(0, LogicalDirection.Forward);
+                this.TagViewControl.Document.Blocks.Clear();
+                this.TagViewControl.CaretPosition = this.TagViewControl.CaretPosition.GetPositionAtOffset(0, LogicalDirection.Forward);
 
-                string[] tags = obj.Text.Split(';');
-                foreach (string tag in tags)
+                foreach (string tag in tags.Split(','))
                 {
-                    this.Tokenizer.CaretPosition.InsertTextInRun(tag);
-                    this.Tokenizer.CaretPosition.InsertTextInRun(";");
+                    this.TagViewControl.CaretPosition.InsertTextInRun(tag);
+                    this.TagViewControl.CaretPosition.InsertTextInRun(",");
                     System.Threading.Thread.Sleep(100);
                 }
             }

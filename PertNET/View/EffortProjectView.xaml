@@ -487,7 +487,7 @@
                             Text="Stichworte" />
 
                         <libWPF:TagView
-                            x:Name="Tokenizer"
+                            x:Name="TagViewControl"
                             Grid.Row="7"
                             Grid.Column="6"
                             MinHeight="30"
@@ -495,8 +495,8 @@
                             VerticalAlignment="Top"
                             Background="WhiteSmoke"
                             FontSize="14"
-                            TokenizingTemplate="{StaticResource ResourceKey=TagViewControlTemplate}"
-                            ToolTip="Eingegebenes Word mit einem ; abschließen."
+                            TagSeparator=","
+                            TagViewTemplate="{StaticResource ResourceKey=TagViewControlTemplate}"
                             VerticalScrollBarVisibility="Auto">
                             <FlowDocument>
                                 <Paragraph>

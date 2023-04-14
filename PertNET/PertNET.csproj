@@ -18,6 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BuildDate.txt" />
     <None Remove="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <None Remove="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
@@ -35,6 +36,7 @@
     <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
+    <EmbeddedResource Include="Resources\BuildDate.txt" />
     <EmbeddedResource Include="Resources\HelpText\Help_EffortProjectVM.md" />
     <EmbeddedResource Include="Resources\HelpText\Help_MainWindowVM.md" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />

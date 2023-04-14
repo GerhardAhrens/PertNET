@@ -34,6 +34,21 @@
                 Grid.Column="0"
                 Text="Applikation" />
 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="{Binding Path=ApplicationName}" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Version" />
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding Path=ApplicationVersion}" />
+
         </libWPF:SimpleGrid>
 
     </libWPF:SimpleGrid>

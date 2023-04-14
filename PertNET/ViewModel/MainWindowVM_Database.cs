@@ -24,9 +24,11 @@ namespace PertNET.ViewModel
     using System.Windows.Data;
 
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.Pattern;
+    using EasyPrototypingNET.WPF;
 
     using PERT.DataRepository;
 
@@ -205,6 +207,35 @@ namespace PertNET.ViewModel
             }
         }
 
+        private void CloseDatabaseForCopy()
+        {
+            try
+            {
+                Result<bool> closeResult = null;
+                using (DatabaseManager dm = new DatabaseManager(this.CurrentDatabaseFile))
+                {
+                    closeResult = dm.Close();
+                }
+
+                if (closeResult != null && closeResult.Success == true)
+                {
+                    this.IsDatabaseOpen = true;
+                    this.DialogDataView = null;
+                    this.MaxRowCount = 0;
+                    this.IsFilterContentFound = true;
+                    this.MinFullEffort = "0,00";
+                    this.MidFullEffort = "0,00";
+                    this.MaxFullEffort = "0,00";
+                    this.PERTFullEffort = "0,00";
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorText = ex.Message;
+                throw;
+            }
+        }
+
         private bool CanSaveAsDatabaseHandler()
         {
             if (this.IsDatabaseOpen == true)
@@ -219,7 +250,37 @@ namespace PertNET.ViewModel
 
         private void SaveAsDatabaseHandler()
         {
+            string resultPath = string.Empty;
 
+            try
+            {
+                string newDatabaseFile = $"{Path.GetFileNameWithoutExtension(this.CurrentDatabaseFile)}_{DateTime.Now.ToString("yyyyMMdd")}{Path.GetExtension(this.CurrentDatabaseFile)}";
+
+                using (SaveFileDialogEx dlgFile = new SaveFileDialogEx())
+                {
+                    dlgFile.Title = "PERT Database speichern als";
+                    dlgFile.InitialDirectory = Path.GetDirectoryName(this.CurrentDatabaseFile);
+                    dlgFile.RestoreDirectory = true;
+                    dlgFile.FileName = newDatabaseFile;
+                    resultPath = dlgFile.OpenDialog();
+                }
+
+                if (string.IsNullOrEmpty(resultPath) == false)
+                {
+                    this.CloseDatabaseForCopy();
+                    File.Copy(this.CurrentDatabaseFile, resultPath);
+                    if (File.Exists(resultPath) == true)
+                    {
+                        this.LoadData();
+
+                        MessageBoxEx.Show("PERT Database", $"Die Datenbank wurde erfolgreich kopiert.", $"Von '{this.CurrentDatabaseFile}' nach '{resultPath}'", MessageBoxButton.OK, InstructionIcon.Information, DialogResultsEx.Ok);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+            }
         }
 
         private void LoadData()

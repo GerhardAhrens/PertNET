@@ -256,48 +256,10 @@ namespace PERT.ViewModel
                     using (EffortProjectRepository repository = new EffortProjectRepository(this.Databasefile))
                     {
                         this.CurrentSelectedItem = repository.ListById(this.currentId);
-                        int chapterB = 0;
-                        int chapterC = 0;
-                        if (this.AddSubItem == true)
+                        if (this.CurrentSelectedItem != null)
                         {
-                            IEnumerable<EffortProject> allItems = repository.List().ToList();
-
-                            if (this.CurrentSelectedItem.ChapterA > 0 && this.CurrentSelectedItem.ChapterB == 0 && this.CurrentSelectedItem.ChapterC == 0)
-                            {
-                                chapterB = allItems.Where(w => w.ChapterA == this.CurrentSelectedItem.ChapterA).Max(m => m.ChapterB) + 1;
-                            }
-                            else if (this.CurrentSelectedItem.ChapterA > 0 && this.CurrentSelectedItem.ChapterB > 0 && this.CurrentSelectedItem.ChapterC == 0)
-                            {
-                                chapterB = this.CurrentSelectedItem.ChapterB;
-                                chapterC = allItems.Where(w => w.ChapterA == this.CurrentSelectedItem.ChapterA && w.ChapterB == this.CurrentSelectedItem.ChapterB).Max(m => m.ChapterC) +1;
-                            }
-                            else if (this.CurrentSelectedItem.ChapterA > 0 && this.CurrentSelectedItem.ChapterB > 0 && this.CurrentSelectedItem.ChapterC > 0)
-                            {
-                                if (this.CurrentSelectedItem.ChapterB == allItems.Where(w => w.ChapterA == this.CurrentSelectedItem.ChapterA && w.ChapterB == this.CurrentSelectedItem.ChapterB).Max(m => m.ChapterC))
-                                {
-                                    chapterB = this.CurrentSelectedItem.ChapterB;
-                                    chapterC = allItems.Where(w => w.ChapterA == this.CurrentSelectedItem.ChapterA && w.ChapterB == this.CurrentSelectedItem.ChapterB).Max(m => m.ChapterC) + 1;
-                                }
-                                else
-                                {
-                                    chapterB = allItems.Where(w => w.ChapterA == this.CurrentSelectedItem.ChapterA).Max(m => m.ChapterB) + 1;
-                                }
-                            }
-
-                            this.ChapterA = this.CurrentSelectedItem.ChapterA;
-                            this.ChapterB = chapterB;
-                            this.ChapterC = chapterC;
-                            this.CurrentSelectedItem = new EffortProject();
-                            this.CurrentSelectedItem.ModifiedBy = UserInfo.TS().CurrentDomainUser;
-                            this.CurrentSelectedItem.ModifiedOn = UserInfo.TS().CurrentTime;
-                            this.BackgroundColorSelected = this.ConvertColorNameToIndex(NOCOLORSELECTED);
-                        }
-                        else
-                        {
-                            if (this.CurrentSelectedItem != null)
-                            {
-                                this.ShowData();
-                            }
+                            this.CurrentSelectedItem.ChapterInsert = false;
+                            this.ShowData();
                         }
                     }
                 }
@@ -306,14 +268,21 @@ namespace PERT.ViewModel
                     int maxChapterA = 0;
                     using (EffortProjectRepository repository = new EffortProjectRepository(this.Databasefile))
                     {
-                        var isDataFound = repository.List().Any();
-                        if (isDataFound == true)
+                        if (this.AddSubItem == false)
                         {
-                            maxChapterA = repository.List().ToList().Max(s => s.ChapterA) + 1;
+                            var isDataFound = repository.List().Any();
+                            if (isDataFound == true)
+                            {
+                                maxChapterA = repository.List().ToList().Max(s => s.ChapterA) + 1;
+                            }
+                            else
+                            {
+                                maxChapterA = 1;
+                            }
                         }
                         else
                         {
-                            maxChapterA = 1;
+                            maxChapterA = 0;
                         }
                     }
 
@@ -321,6 +290,15 @@ namespace PERT.ViewModel
                     this.CurrentSelectedItem = new EffortProject();
                     this.CurrentSelectedItem.ModifiedBy = UserInfo.TS().CurrentDomainUser;
                     this.CurrentSelectedItem.ModifiedOn = UserInfo.TS().CurrentTime;
+                    if (this.AddSubItem == true)
+                    {
+                        this.CurrentSelectedItem.ChapterInsert = true;
+                    }
+                    else
+                    {
+                        this.CurrentSelectedItem.ChapterInsert = false;
+                    }
+
                     this.BackgroundColorSelected = this.ConvertColorNameToIndex(NOCOLORSELECTED);
                 }
             }
@@ -356,8 +334,11 @@ namespace PERT.ViewModel
 
             if (string.IsNullOrEmpty(this.TagText) == false)
             {
-                this.EventAgg.Publish<TagOutEventArgs<IViewModel>>(
-                    new TagOutEventArgs<IViewModel> { Sender = this as IViewModel, Text = this.TagText });
+                this.EventAgg.Publish<TagOutEventArgs<IViewModel>>(new TagOutEventArgs<IViewModel> 
+                { 
+                    Sender = this as IViewModel,
+                    Text = this.TagText 
+                });
             }
 
             this.IsDirty = false;
@@ -375,8 +356,12 @@ namespace PERT.ViewModel
                     Window currentWindow = Application.Current.Windows.LastActiveWindow();
                     if (currentWindow != null)
                     {
-                        currentWindow.DialogResult = true;
-                        currentWindow.Close();
+                        if (currentWindow.IsActive == true)
+                        {
+                            currentWindow.DialogResult = true;
+                            currentWindow.Tag = this.CurrentSelectedItem;
+                            currentWindow.Close();
+                        }
                     }
                 }
             }
@@ -385,8 +370,12 @@ namespace PERT.ViewModel
                 Window currentWindow = Application.Current.Windows.LastActiveWindow();
                 if (currentWindow != null)
                 {
-                    currentWindow.DialogResult = true;
-                    currentWindow.Close();
+                    if (currentWindow.IsActive == true)
+                    {
+                        currentWindow.DialogResult = true;
+                        currentWindow.Tag = this.CurrentSelectedItem;
+                        currentWindow.Close();
+                    }
                 }
             }
         }
@@ -402,12 +391,11 @@ namespace PERT.ViewModel
             {
                 if (this.CurrentSelectedItem != null)
                 {
-                    this.EventAgg.Publish<TagInEventArgs<IViewModel>>(
-                                    new TagInEventArgs<IViewModel>
-                                    {
-                                        Sender = this as IViewModel,
-                                        Text = string.Empty
-                                    });
+                    this.EventAgg.Publish<TagInEventArgs<IViewModel>>(new TagInEventArgs<IViewModel>
+                    {
+                        Sender = this as IViewModel,
+                        Text = string.Empty
+                    });
 
                     EffortProject original = EffortProject.ToClone(this.CurrentSelectedItem);
 
@@ -428,10 +416,13 @@ namespace PERT.ViewModel
                     {
                         if (this.CurrentSelectedItem.Id == Guid.Empty && this.IsCopyItem == false)
                         {
-                            if (repository.ExistChapter(this.ChapterA, this.ChapterB, this.ChapterC) == true)
+                            if (this.CurrentSelectedItem.ChapterInsert == false)
                             {
-                                AppMsgDialog.ChapterIsFound(this.CurrentSelectedItem.Chapter);
-                                return;
+                                if (repository.ExistChapter(this.ChapterA, this.ChapterB, this.ChapterC) == true)
+                                {
+                                    AppMsgDialog.ChapterIsFound(this.CurrentSelectedItem.Chapter);
+                                    return;
+                                }
                             }
 
                             this.CurrentSelectedItem.CreatedBy = UserInfo.TS().CurrentUser;

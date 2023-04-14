@@ -15,7 +15,7 @@
     FocusManager.FocusedElement="{Binding ElementName=txtCalcContent}"
     ResizeMode="NoResize"
     mc:Ignorable="d">
-    
+
     <Window.Resources>
         <sys:String x:Key="fntDialogIcon">&#xf1ec;</sys:String>
         <sys:String x:Key="fntOk">&#xf00c;</sys:String>

@@ -28,7 +28,7 @@
                         UseAeroCaptionButtons="False" />
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderBrush" Value="LightYellow" />
+            <Setter Property="BorderBrush" Value="LightBlue" />
             <Setter Property="Background" Value="WhiteSmoke" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -59,7 +59,27 @@
                                     FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
                                     FontSize="20"
                                     ToolTip="Beenden"
-                                    WindowChrome.IsHitTestVisibleInChrome="True" />
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground" Value="Red" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
 
                             </DockPanel>

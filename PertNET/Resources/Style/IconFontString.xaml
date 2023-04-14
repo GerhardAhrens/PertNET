@@ -12,6 +12,7 @@
     <!--  Statuszeile  -->
     <sys:String x:Key="fntStatusbarUser">&#xf007;</sys:String>
     <sys:String x:Key="fntStatusbarMonitorSize">&#xf108;</sys:String>
+    <sys:String x:Key="fntStatusbarCount">&#xf1b3;</sys:String>
     <sys:String x:Key="fntStatusbarClock">&#xf133;</sys:String>
 
     <!--  Context Menü  -->

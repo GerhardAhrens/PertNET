@@ -242,7 +242,6 @@ namespace PertNET.ViewModel
             this.CmdAgg.AddOrSetCommand("ClearFilterCommand", new RelayCommand(p1 => this.ClearFilterHandler(), p2 => this.CanClearFilterHandler()));
 
             this.CmdAgg.AddOrSetCommand("AddEntryCommand", new RelayCommand(p1 => this.AddEntryHandler(), p2 => this.CanAddEntryHandler()));
-            this.CmdAgg.AddOrSetCommand("AddSubEntryCommand", new RelayCommand(p1 => this.AddSubEntryHandler(), p2 => this.CanAddSubEntryHandler()));
             this.CmdAgg.AddOrSetCommand("EditEntryCommand", new RelayCommand(p1 => this.EditEntryHandler(), p2 => this.CanEditEntryHandler()));
             this.CmdAgg.AddOrSetCommand("DeleteEntryCommand", new RelayCommand(p1 => this.DeleteEntryHandler(), p2 => this.CanDeleteEntryHandler()));
             this.CmdAgg.AddOrSetCommand("CopyEntryCommand", new RelayCommand(p1 => this.CopyEntryHandler(), p2 => this.CanCopyEntryHandler()));
@@ -404,7 +403,7 @@ namespace PertNET.ViewModel
 
                     EffortProject selectedItem = itemsCollection.FirstOrDefault();
 
-                    this.MenuTextAddSub = $"Einfügen nach {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} erstellen";
+                    this.MenuTextAddSub = $"Einfügen ...";
                     this.MenuTextEdit = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} ändern";
                     this.MenuTextDelete = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} löschen";
                     this.MenuTextCopy = $"Eintrag zu {selectedItem.ChapterA}.{selectedItem.ChapterB}.{selectedItem.ChapterC} kopieren";

@@ -17,6 +17,8 @@
     Title="PERT Effort Calc"
     Width="900"
     Height="500"
+    MinWidth="900"
+    MinHeight="500"
     d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowVM}"
     libWPF:ActionDialogClosing.RaiseClosingHandler="True"
     Style="{DynamicResource ResourceKey=CustomWindowStyle}"
@@ -550,7 +552,7 @@
 
             <ListView.ContextMenu>
                 <ContextMenu Focusable="True" IsEnabled="{Binding Path=IsContextMenuEnabled, UpdateSourceTrigger=PropertyChanged}">
-                    <MenuItem Command="{Binding Path=CmdAgg[AddSubEntryCommand]}" Header="{Binding Path=MenuTextAddSub, UpdateSourceTrigger=PropertyChanged}">
+                    <MenuItem Command="{Binding Path=CmdAgg[InsertEntryCommand]}" Header="{Binding Path=MenuTextAddSub, UpdateSourceTrigger=PropertyChanged}">
                         <MenuItem.Icon>
                             <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntAddSubEntry}}" />
                         </MenuItem.Icon>
@@ -810,6 +812,11 @@
                         Text="{StaticResource ResourceKey=fntStatusbarMonitorSize}" />
                     <Run Text=":" />
                     <Run x:Name="tbMonitorSize" />
+                    <Run
+                        FontFamily="{StaticResource ResourceKey=FontAW5Solid}"
+                        FontWeight="Bold"
+                        Text="{StaticResource ResourceKey=fntStatusbarCount}" />
+                    <Run Text="{Binding Path=MaxRowCount}" />
                     <Run Text="; Dokument: =&gt;" />
                     <Run Text="{Binding Path=StatuslineDescription}" />
                 </TextBlock>

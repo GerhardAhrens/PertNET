@@ -16,10 +16,12 @@
 namespace PertNET.ViewModel
 {
     using System;
+    using System.Runtime.Versioning;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
 
+    [SupportedOSPlatform("windows")]
     public class TabApplicationInfoVM : ViewModelBase<TabApplicationInfoVM>, IViewModel
     {
         /// <summary>
@@ -31,6 +33,20 @@ namespace PertNET.ViewModel
             this.LoadDataHandler();
         }
 
+        [PropertyBinding]
+        public string ApplicationName
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
+        [PropertyBinding]
+        public string ApplicationVersion
+        {
+            get { return this.Get<string>(); }
+            set { this.Set(value); }
+        }
+
         protected override void InitCommands()
         {
         }
@@ -40,7 +56,8 @@ namespace PertNET.ViewModel
         {
             try
             {
-
+                this.ApplicationName = ApplicationProperties.AssemblyName;
+                this.ApplicationVersion = ApplicationProperties.VersionNameBuildDateTime;
             }
             catch (Exception ex)
             {

@@ -77,6 +77,8 @@ namespace PertNET.Model
         [ExportField]
         public string Tag { get; set; }
 
+        public bool ChapterInsert { get; set; } = false;
+
         public string CreatedBy { get; set; }
 
         public DateTime CreatedOn { get; set; }
