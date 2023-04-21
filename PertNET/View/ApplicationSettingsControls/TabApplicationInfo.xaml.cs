@@ -2,12 +2,14 @@
 {
     using PertNET.ViewModel;
 
+    using System.Runtime.Versioning;
     using System.Windows;
     using System.Windows.Controls;
 
     /// <summary>
     /// Interaktionslogik für TabApplicationInfo.xaml
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public partial class TabApplicationInfo : UserControl
     {
         private TabApplicationInfoVM viewModel = null;

@@ -21,6 +21,8 @@ namespace PERT_Test.Core
     using System.Globalization;
     using System.Threading;
     using System.Windows.Shell;
+
+    using DocumentFormat.OpenXml.Drawing.Charts;
     using DocumentFormat.OpenXml.Spreadsheet;
     using DocumentFormat.OpenXml.Wordprocessing;
 
@@ -224,15 +226,14 @@ namespace PERT_Test.Core
         }
 
         [TestMethod]
-        public void DeleteCurrentChapterA2()
+        public void DeleteCurrentChapterA1B0()
         {
             List<ChapterContent> chapters = CreateChapterData();
             Assert.IsTrue(chapters.Count == 11);
 
-            ChapterContent deleteChapter = new ChapterContent() { ChapterA = 2, ChapterB = 0, ChapterC = 0, ChapterText = "Kapitel(1)-Gelöscht"};
+            chapters[0].ChapterDelete = true; // Kapitel 1.0.0 gelöscht
 
-            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters, deleteChapter);
-
+            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters);
         }
 
         [TestMethod]
@@ -241,10 +242,42 @@ namespace PERT_Test.Core
             List<ChapterContent> chapters = CreateChapterData();
             Assert.IsTrue(chapters.Count == 11);
 
-            ChapterContent deleteChapter = new ChapterContent() { ChapterA = 2, ChapterB = 1, ChapterC = 0, ChapterText = "Kapitel(1)-Gelöscht" };
+            chapters[0].ChapterDelete = true; // Kapitel 1.0.0 gelöscht
 
-            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters, deleteChapter);
+            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters);
+        }
 
+        [TestMethod]
+        public void DeleteCurrentChapterA3B2()
+        {
+            List<ChapterContent> chapters = CreateChapterData();
+            Assert.IsTrue(chapters.Count == 11);
+
+            chapters[5].ChapterDelete = true; // Kapitel 3.2.0 gelöscht
+
+            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters);
+        }
+
+        [TestMethod]
+        public void DeleteCurrentChapterA4B0()
+        {
+            List<ChapterContent> chapters = CreateChapterData();
+            Assert.IsTrue(chapters.Count == 11);
+
+            chapters[6].ChapterDelete = true; // Kapitel 4.0.0 gelöscht
+
+            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters);
+        }
+
+        [TestMethod]
+        public void DeleteCurrentChapterA4B1()
+        {
+            List<ChapterContent> chapters = CreateChapterData();
+            Assert.IsTrue(chapters.Count == 11);
+
+            chapters[7].ChapterDelete = true; // Kapitel 4.1.0 gelöscht
+
+            List<ChapterContent> resultReNumber1 = ReNumberChapterDelete(chapters);
         }
 
         [TestMethod]
@@ -329,28 +362,49 @@ namespace PERT_Test.Core
             return chapters;
         }
 
-        private List<ChapterContent> ReNumberChapterDelete(List<ChapterContent> chapters, ChapterContent delete)
+        private List<ChapterContent> ReNumberChapterDelete(List<ChapterContent> chapters)
         {
-            int startIndex = chapters.IndexOf(i => i.ChapterA == delete.ChapterA && i.ChapterB== delete.ChapterB && i.ChapterC == delete.ChapterC);
+            bool first = false;
+
+            int startIndex = chapters.IndexOf(i => i.ChapterDelete == true);
+
+            if (startIndex == 0)
+            {
+                first = true;
+            }
+
+            ChapterContent startItem = chapters.Find(f => f.ChapterDelete == true);
             chapters.RemoveAt(startIndex);
             chapters = chapters.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC).ThenByDescending(i => i.ChapterDelete).ToList();
 
-            for (int i = startIndex+1; i < chapters.Count; i++)
+            for (int i = startIndex; i < chapters.Count; i++)
             {
-                ChapterContent beforeItem = chapters[i];
-                ChapterContent currentItem = chapters[startIndex];
+                ChapterContent currentItem = chapters[i];
 
-                if (currentItem.ChapterA > 0 && beforeItem.ChapterB == 0 && beforeItem.ChapterC == 0)
+                if (startItem.ChapterB == 0 && startItem.ChapterC == 0 && first == true)
                 {
-                    chapters[i].ChapterA = chapters[i].ChapterA - 1;
+                    if (currentItem.ChapterB >= 0 && currentItem.ChapterC >= 0)
+                    {
+                        chapters[i].ChapterA = chapters[i].ChapterA - 1;
+                    }
                 }
-                else if (beforeItem.ChapterA == currentItem.ChapterA && beforeItem.ChapterB > 0 && beforeItem.ChapterC == 0)
+
+                if (startItem.ChapterB == 0 && startItem.ChapterC == 0 && first == false)
                 {
-                    chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    if (startItem.ChapterA == currentItem.ChapterA && currentItem.ChapterB > 0 && currentItem.ChapterC == 0)
+                    {
+                        chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    }
+
                 }
-                else if (beforeItem.ChapterA == currentItem.ChapterA && beforeItem.ChapterB == currentItem.ChapterB && beforeItem.ChapterC > 0)
+
+                if (startItem.ChapterB > 0 && startItem.ChapterC == 0 && first == false)
                 {
-                    chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    if (startItem.ChapterA == currentItem.ChapterA && currentItem.ChapterB > 0 && currentItem.ChapterC == 0)
+                    {
+                        chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    }
+
                 }
             }
 
