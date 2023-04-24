@@ -21,9 +21,10 @@ namespace PertNET.Core
     using System.Runtime.Versioning;
 
     using EasyPrototypingNET.Pattern;
+    using EasyPrototypingNET.Settings;
 
     [SupportedOSPlatform("windows")]
-    public sealed class LocalSettingsManager : DisposableBase
+    public sealed class LocalSettingsManager : LocalSettingsManagerBase
     {
         private LocalSettings localSettings = null;
         private string database = string.Empty;
@@ -43,7 +44,7 @@ namespace PertNET.Core
             this.localSettings = new LocalSettings();
             if (this.localSettings != null)
             {
-                this.InitSetting();
+                this.InitSettings();
             }
         }
 
@@ -137,6 +138,10 @@ namespace PertNET.Core
             }
         }
 
+        public override void UpdateSettings<T>(string key, T value)
+        {
+        }
+
         protected override void DisposeManagedResources()
         {
             /* Behandeln von Managed Resources bem verlassen der Klasse */
@@ -151,7 +156,7 @@ namespace PertNET.Core
             /* Behandeln von UnManaged Resources bem verlassen der Klasse */
         }
 
-        private void InitSetting()
+        public override void InitSettings()
         {
             if (this.localSettings.IsExitSettings() == false)
             {
