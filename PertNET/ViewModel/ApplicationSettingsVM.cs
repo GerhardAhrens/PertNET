@@ -29,14 +29,14 @@ namespace PertNET.ViewModel
     public class ApplicationSettingsVM : ViewModelBase<ApplicationSettingsVM>, IViewModel
     {
         private LexiconCollection<SettingsTabItem, string> searchList;
-        private readonly ExtendedObservableCollectionEx<Visibility> visibilityAgg;
+        private readonly ObservableCollectionEx<Visibility> visibilityAgg;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationSettingsVM"/> class.
         /// </summary>
         public ApplicationSettingsVM()
         {
-            this.visibilityAgg = new ExtendedObservableCollectionEx<Visibility>();
+            this.visibilityAgg = new ObservableCollectionEx<Visibility>();
             this.CreateVisibilityList();
             this.TabItemSearchList();
             this.InitCommands();
@@ -49,7 +49,7 @@ namespace PertNET.ViewModel
             set { this.Set(value, this.DefaultSearch); }
         }
 
-        public ExtendedObservableCollectionEx<Visibility> VisibilityAgg
+        public ObservableCollectionEx<Visibility> VisibilityAgg
         {
             get
             {

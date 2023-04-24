@@ -24,6 +24,7 @@ namespace PertNET.ViewModel
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
+    using EasyPrototypingNET.IO;
 
     using PERT.DataRepository;
 

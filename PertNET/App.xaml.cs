@@ -13,6 +13,7 @@
     using System.Windows.Markup;
     using System.Windows.Threading;
 
+    using EasyPrototypingNET.IO;
     using EasyPrototypingNET.Pattern;
 
     using PertNET.Core;

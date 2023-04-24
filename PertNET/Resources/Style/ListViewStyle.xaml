@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:localUI="clr-namespace:PertNET.Core.UI">
+    xmlns:libWPF="clr-namespace:EasyPrototypingNET.WPF;assembly=EasyPrototypingNET">
 
     <!--#region ListView Styles-->
     <Style x:Key="lvwMainStyle" TargetType="{x:Type ListView}">
@@ -54,7 +54,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <localUI:GridViewRowPresenterWithGridLines Margin="{TemplateBinding Padding}" Columns="{TemplateBinding GridView.ColumnCollection}" />
+                        <libWPF:GridViewRowPresenterWithGridLines Margin="{TemplateBinding Padding}" Columns="{TemplateBinding GridView.ColumnCollection}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
