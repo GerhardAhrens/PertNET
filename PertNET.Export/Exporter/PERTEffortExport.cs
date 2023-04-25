@@ -93,7 +93,7 @@ namespace PertNET.Export.Exporter
             {
                 using (XLWorkbook wb = new XLWorkbook())
                 {
-                    IXLWorksheet ws = wb.Worksheets.Add(this.SheetName);
+                    IXLWorksheet ws = wb.Worksheets.Add(this.SheetName.TruncateLeft(30));
                     ws.PageSetup.PageOrientation = XLPageOrientation.Landscape;
                     ws.PageSetup.PaperSize = XLPaperSize.A4Paper;
                     ws.PageSetup.ShowGridlines = true;

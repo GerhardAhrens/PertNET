@@ -55,12 +55,15 @@ namespace PertNET.ViewModel
                 settings.Owner = Application.Current.MainWindow;
                 settings.HeaderText = "Speichern der Datenbanke als ...";
                 settings.InstructionText = "Erstellen einer neuen PERT Datenbank";
+                settings.DescriptionText = "Wählen Sie ein Verzeichnis aus der Liste oder ein neues Verszeichnis über den Button unten.";
+                settings.SelectFolderText = "Wählen sie einen anderen Ordner...";
+                settings.FileTyp = fileTyp;
                 settings.FileFilter = fileFilter;
                 settings.Folders = folders;
                 settings.InitialFolder = initFolder;
                 settings.InitialFile = initialFile;
 
-                using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings,"eff"))
+                using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings))
                 {
                     outPathFile = selectFolder.SelectFolder;
                 }
@@ -113,13 +116,15 @@ namespace PertNET.ViewModel
                 settings.Owner = Application.Current.MainWindow;
                 settings.HeaderText = "Auswahl Datenbank ...";
                 settings.InstructionText = "Öffnen einer PERT Datenbank mit einer Aufwandsschätzungen...";
+                settings.DescriptionText = "Wählen Sie ein Verzeichnis aus der Liste oder ein neues Verszeichnis über den Button unten.";
+                settings.SelectFolderText = "Wählen sie einen anderen Ordner...";
                 settings.FileFilter = fileFilter;
                 settings.Folders = folders;
                 settings.InitialFolder = initFolder;
                 settings.InitialFile = initialImportFile;
-                settings.FolderAction = FolderAction.OpenFile;
+                settings.FolderAction = SelectFolderAction.OpenFile;
 
-                using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings, fileTyp))
+                using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings))
                 {
                     selectedDatabaseFile = selectFolder.SelectFolder;
                 }
@@ -301,14 +306,11 @@ namespace PertNET.ViewModel
                     IEnumerable<EffortProject> overviewSource = repository.List();
                     if (overviewSource != null)
                     {
+                        overviewSource = overviewSource.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC);
                         this.DialogDataView = CollectionViewSource.GetDefaultView(overviewSource);
                         if (this.DialogDataView != null)
                         {
                             this.DialogDataView.Filter = rowItem => this.DataDefaultFilter(rowItem as EffortProject);
-                            this.DialogDataView.SortDescriptions.Clear();
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterA", ListSortDirection.Ascending));
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterB", ListSortDirection.Ascending));
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterC", ListSortDirection.Ascending));
                             this.DialogDataView.MoveCurrentToFirst();
                             this.MaxRowCount = this.DialogDataView.Count<EffortProject>();
 

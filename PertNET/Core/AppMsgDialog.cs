@@ -131,6 +131,18 @@ namespace PertNET.Core
             return dialogResult;
         }
 
+        public static DialogResultsEx ExportSheetName(string sheetName)
+        {
+            DialogResultsEx dialogResult = DialogResultsEx.None;
+
+            dialogResult = MessageBoxEx.ShowWithOwner(Application.Current.MainWindow, APPLICATIONNAME,
+                "Name der Excelmappe.",
+                $"Der Name '{sheetName}' für die Excelmappe ist zu lang (Zeichen {sheetName.Length}).",
+                MessageBoxButton.OK, InstructionIcon.Information, DialogResultsEx.Ok);
+
+            return dialogResult;
+        }
+
         private static void CleanUp()
         {
             Mouse.OverrideCursor = null;

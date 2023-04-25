@@ -21,19 +21,17 @@ namespace PertNET.Core
 
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.Pattern;
+    using EasyPrototypingNET.WPF;
 
     [SupportedOSPlatform("windows")]
     public class SelectFolderForDialog : DisposableBase
     {
-        public SelectFolderForDialog(SelectFolderSettings settings, string fileType)
+        public SelectFolderForDialog(SelectFolderSettings settings)
         {
-            this.FileType = fileType;
             this.FolderSelect(settings);
         }
 
         public string SelectFolder { get; private set; }
-
-        public string FileType { get; private set; }
 
         protected override void DisposeManagedResources()
         {
@@ -52,17 +50,21 @@ namespace PertNET.Core
             if (settings.FileFilter == null)
             {
                 FileFilter fileFilter = new FileFilter();
-                if (this.FileType == "xlsx")
+                if (settings.FileTyp == "xlsx")
                 {
                     fileFilter.AddFilter("Excel (ab 2007)", "xlsx", true);
                 }
-                else if (this.FileType == "docx")
+                else if (settings.FileTyp == "docx")
                 {
                     fileFilter.AddFilter("Word (ab 2007)", "docx", true);
                 }
-                else if (this.FileType == "png")
+                else if (settings.FileTyp == "png")
                 {
                     fileFilter.AddFilter("Picture", "png", true);
+                }
+                else if (settings.FileTyp == "jpg")
+                {
+                    fileFilter.AddFilter("Picture", "jpg", true);
                 }
 
                 settings.FileFilter = fileFilter;

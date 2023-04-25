@@ -2,7 +2,7 @@
 {
     public static class LibraryInfo
     {
-        public const string Version = "2.0.2023.3";
+        public const string Version = "2.1.2023.10";
         public const string BuildDate = "20230413";
 
         public const string AssemblyTitle = "PertNET";

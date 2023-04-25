@@ -27,6 +27,8 @@ namespace PERT.ViewModel
     using System.Windows.Controls;
     using System.Windows.Media;
 
+    using DocumentFormat.OpenXml.Math;
+
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.Pattern;
@@ -37,6 +39,7 @@ namespace PERT.ViewModel
     using PertNET.Core;
     using PertNET.DataRepository;
     using PertNET.Model;
+    using static System.Runtime.InteropServices.JavaScript.JSType;
 
     [SupportedOSPlatform("windows")]
     public class EffortProjectVM : ViewModelBase<EffortProjectVM>, IViewModel, IDataErrorInfo
@@ -44,7 +47,7 @@ namespace PERT.ViewModel
         private const string DOUBLEF2 = "0.00";
         private const string NOCOLORSELECTED = "Transparent";
         private readonly Dictionary<string, Func<Result<string>>> validationDelegates = new Dictionary<string, Func<Result<string>>>();
-        private readonly Dictionary<string, string> validErrors = new Dictionary<string, string>();
+        //private readonly Dictionary<string, string> validErrors = new Dictionary<string, string>();
 
         public EffortProjectVM(Guid id, bool subItem, bool copyItem = false)
         {
@@ -201,6 +204,7 @@ namespace PERT.ViewModel
 
         private bool IsDirty { get; set; }
 
+
         public string this[string propName]
         {
             get
@@ -208,24 +212,21 @@ namespace PERT.ViewModel
                 Func<Result<string>> function = null;
                 if (validationDelegates.TryGetValue(propName, out function) == true)
                 {
+                    this.HasValidationsErrors = this.CounFieldError();
+
                     Result<string> ruleText = this.DoValidation(function, propName);
                     if (string.IsNullOrEmpty(ruleText.Value) == false)
                     {
                         this.HasValidationsErrors = (bool)ruleText.ResultState;
-                        validErrors.AddIfNotExists(propName, ruleText.Value);
                         return ruleText.Value;
                     }
                     else
                     {
-                        validErrors.DeleteIfExistsKey(propName);
-                        this.HasValidationsErrors = false;
-                        return string.Empty;
+                        return ruleText.Value;
                     }
                 }
                 else
                 {
-                    validErrors.DeleteIfExistsKey(propName);
-                    this.HasValidationsErrors = false;
                     return string.Empty;
                 }
             }
@@ -559,6 +560,22 @@ namespace PERT.ViewModel
                 this.IsDirty = true;
             }
         }
+
+        private bool CounFieldError()
+        {
+            int countError = 0;
+            foreach (var item in validationDelegates)
+            {
+                Result<string> ruleResult = item.Value.Invoke();
+                if (ruleResult.Value.IsEmpty() == false)
+                {
+                    countError++;
+                }
+            }
+
+            return countError.ToBool();
+        }
+
 
         private int ConvertColorNameToIndex(string colorName)
         {

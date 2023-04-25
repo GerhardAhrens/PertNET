@@ -19,6 +19,7 @@ namespace PertNET.ViewModel
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
+    using DocumentFormat.OpenXml.EMMA;
 
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
@@ -137,9 +138,32 @@ namespace PertNET.ViewModel
             {
                 try
                 {
+                    List<EffortProject> chapters = null;
                     using (EffortProjectRepository repository = new EffortProjectRepository(this.CurrentDatabaseFile))
                     {
+                        chapters = this.DialogDataView.Cast<EffortProject>().ToList();
+                        chapters.SingleOrDefault(s => s.Id == this.CurrentSelectedItem.Id).ChapterDelete = true; ;
                         repository.Delete(this.CurrentSelectedItem.Id);
+                    }
+
+                    if (chapters != null)
+                    {
+                        List<EffortProject> renumber = ReNumberChapterDelete(chapters);
+                        using (EffortProjectRepository repository = new EffortProjectRepository(this.CurrentDatabaseFile))
+                        {
+                            foreach (EffortProject item in renumber)
+                            {
+                                Guid id = item.Id;
+                                EffortProject row = repository.ListById(id);
+                                if (row != null)
+                                {
+                                    row.ChapterA = item.ChapterA;
+                                    row.ChapterB = item.ChapterB;
+                                    row.ChapterC = item.ChapterC;
+                                    repository.Update(row);
+                                }
+                            }
+                        }
                     }
 
                     this.LoadData();
@@ -307,6 +331,57 @@ namespace PertNET.ViewModel
 
                 chapters.ForEach(f => f.ChapterInsert = false);
             }
+
+            return chapters;
+        }
+
+        private List<EffortProject> ReNumberChapterDelete(List<EffortProject> chapters)
+        {
+            bool first = false;
+
+            int startIndex = chapters.IndexOf(i => i.ChapterDelete == true);
+
+            if (startIndex == 0)
+            {
+                first = true;
+            }
+
+            EffortProject startItem = chapters.Find(f => f.ChapterDelete == true);
+            chapters.RemoveAt(startIndex);
+            chapters = chapters.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC).ThenByDescending(i => i.ChapterDelete).ToList();
+
+            for (int i = startIndex; i < chapters.Count; i++)
+            {
+                EffortProject currentItem = chapters[i];
+
+                if (startItem.ChapterB == 0 && startItem.ChapterC == 0 && first == true)
+                {
+                    if (currentItem.ChapterB >= 0 && currentItem.ChapterC >= 0)
+                    {
+                        chapters[i].ChapterA = chapters[i].ChapterA - 1;
+                    }
+                }
+
+                if (startItem.ChapterB == 0 && startItem.ChapterC == 0 && first == false)
+                {
+                    if (startItem.ChapterA == currentItem.ChapterA && currentItem.ChapterB > 0 && currentItem.ChapterC == 0)
+                    {
+                        chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    }
+
+                }
+
+                if (startItem.ChapterB > 0 && startItem.ChapterC == 0 && first == false)
+                {
+                    if (startItem.ChapterA == currentItem.ChapterA && currentItem.ChapterB > 0 && currentItem.ChapterC == 0)
+                    {
+                        chapters[i].ChapterB = chapters[i].ChapterB - 1;
+                    }
+
+                }
+            }
+
+            chapters = chapters.OrderBy(a => a.ChapterA).ThenBy(b => b.ChapterB).ThenBy(c => c.ChapterC).ToList();
 
             return chapters;
         }

@@ -25,6 +25,7 @@ namespace PertNET.ViewModel
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.IO;
+    using EasyPrototypingNET.WPF;
 
     using PERT.DataRepository;
 
@@ -143,13 +144,16 @@ namespace PertNET.ViewModel
             List<string> folders = LastSavedFolder.GetFolders();
             SelectFolderSettings settings = new SelectFolderSettings();
             settings.Owner = Application.Current.MainWindow;
+            settings.FileTyp = "xlsx";
             settings.HeaderText = "Export save ...";
             settings.InstructionText = "Export data as a file for further editing";
+            settings.DescriptionText = "Wählen Sie ein Verzeichnis aus der Liste oder ein neues Verszeichnis über den Button unten.";
+            settings.SelectFolderText = "Wählen sie einen anderen Ordner...";
             settings.Folders = folders;
             settings.InitialFolder = initFolder;
             settings.InitialFile = initialExportFile;
 
-            using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings,"xlsx"))
+            using (SelectFolderForDialog selectFolder = new SelectFolderForDialog(settings))
             {
                 outPathFile = selectFolder.SelectFolder;
             }

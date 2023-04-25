@@ -52,7 +52,6 @@
   <ItemGroup>
     <Folder Include="Converter\" />
     <Folder Include="Core\IO\" />
-    <Folder Include="Core\FileTargetFolder\" />
     <Folder Include="Core\Enums\" />
     <Folder Include="Core\EventArgs\" />
     <Folder Include="Core\ApplicationHotKeys\" />

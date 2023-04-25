@@ -18,6 +18,8 @@
     {
         public ApplicationSettingsView()
         {
+            FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
+
             this.InitializeComponent();
             WeakEventManager<Window, RoutedEventArgs>.AddHandler(this, "Loaded", this.OnWindowLoaded);
             WeakEventManager<TabControl, RoutedEventArgs>.AddHandler(this.tabControlSettings, "Loaded", this.OnTabControlLoaded);

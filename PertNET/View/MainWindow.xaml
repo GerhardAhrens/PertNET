@@ -817,7 +817,7 @@
                         FontWeight="Bold"
                         Text="{StaticResource ResourceKey=fntStatusbarCount}" />
                     <Run Text="{Binding Path=MaxRowCount}" />
-                    <Run Text="; Dokument: =&gt;" />
+                    <Run Text="; Datenbank: =&gt;" />
                     <Run Text="{Binding Path=StatuslineDescription}" />
                 </TextBlock>
             </StatusBarItem>

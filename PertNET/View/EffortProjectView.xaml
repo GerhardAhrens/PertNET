@@ -130,7 +130,6 @@
                         <i:Interaction.Behaviors>
                             <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
                             <wpfBehavior:TabOnEnterBehavior />
-                            <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="A" />
                         </i:Interaction.Behaviors>
                     </libWPF:TextBoxEx>
 
@@ -146,7 +145,6 @@
                         <i:Interaction.Behaviors>
                             <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
                             <wpfBehavior:TabOnEnterBehavior />
-                            <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="B" />
                         </i:Interaction.Behaviors>
                     </libWPF:TextBoxEx>
 
@@ -162,7 +160,6 @@
                         <i:Interaction.Behaviors>
                             <wpfBehavior:TextBoxInputBehavior InputMode="DigitInput" />
                             <wpfBehavior:TabOnEnterBehavior />
-                            <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="C" />
                         </i:Interaction.Behaviors>
                     </libWPF:TextBoxEx>
 
@@ -176,7 +173,6 @@
                         Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                         <i:Interaction.Behaviors>
                             <wpfBehavior:TabOnEnterBehavior />
-                            <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="Titel/Bezeichnung" />
                         </i:Interaction.Behaviors>
                     </libWPF:TextBoxEx>
 
@@ -278,7 +274,6 @@
                                 <i:Interaction.Behaviors>
                                     <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
                                     <wpfBehavior:TabOnEnterBehavior />
-                                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="1,0" />
                                 </i:Interaction.Behaviors>
                             </libWPF:TextBoxEx>
 
@@ -325,7 +320,6 @@
                                 <i:Interaction.Behaviors>
                                     <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
                                     <wpfBehavior:TabOnEnterBehavior />
-                                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="1,0" />
                                 </i:Interaction.Behaviors>
                             </libWPF:TextBoxEx>
 
@@ -341,7 +335,6 @@
                                 <i:Interaction.Behaviors>
                                     <wpfBehavior:TextBoxInputBehavior DecimalPlace="2" InputMode="DecimalInput" />
                                     <wpfBehavior:TabOnEnterBehavior />
-                                    <wpfBehavior:TextBoxWatermarkBehavior WatermarkStyle="{StaticResource ResourceKey=WatertextStyle}" WatermarkText="1,0" />
                                 </i:Interaction.Behaviors>
                             </libWPF:TextBoxEx>
 
@@ -484,7 +477,7 @@
                             Margin="0,10"
                             VerticalAlignment="Center"
                             FontWeight="Medium"
-                            Text="Stichworte" />
+                            Text="Stichworte, mit einem Komma abschließen" />
 
                         <libWPF:TagView
                             x:Name="TagViewControl"

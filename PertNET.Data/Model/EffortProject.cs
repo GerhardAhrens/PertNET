@@ -79,6 +79,8 @@ namespace PertNET.Model
 
         public bool ChapterInsert { get; set; } = false;
 
+        public bool ChapterDelete { get; set; } = false;
+
         public string CreatedBy { get; set; }
 
         public DateTime CreatedOn { get; set; }
