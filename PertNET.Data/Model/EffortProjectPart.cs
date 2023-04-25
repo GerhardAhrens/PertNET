@@ -40,6 +40,14 @@ namespace PertNET.Model
             }
         }
 
+        public string ChapterSorter
+        {
+            get
+            {
+                return $"{this.ChapterA.ToString("000")}.{this.ChapterB.ToString("000")}.{this.ChapterC.ToString("000")}";
+            }
+        }
+
         public string Timestamp
         {
             get

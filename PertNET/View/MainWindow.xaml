@@ -678,7 +678,7 @@
 
                     <GridViewColumn
                         Width="100"
-                        libWPF:ListViewSort.PropertyName="ChapterA"
+                        libWPF:ListViewSort.PropertyName="ChapterSorter"
                         Header="Aufwandspunkt"
                         HeaderContainerStyle="{StaticResource lvwHeaderLeft}">
                         <GridViewColumn.CellTemplate>
