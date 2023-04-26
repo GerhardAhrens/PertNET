@@ -16,8 +16,6 @@
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.Pattern;
 
-    using PertNET.Core;
-
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
