@@ -19,6 +19,7 @@ namespace PertNET.Export.Exporter
 
     using EasyPrototypingNET.IO;
 
+    using PertNET.Data.Core;
     using PertNET.Model;
 
     using System;

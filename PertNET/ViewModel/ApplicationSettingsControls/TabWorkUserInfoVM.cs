@@ -29,9 +29,9 @@ namespace PERT.ViewModel
     using EasyPrototypingNET.WPF;
 
     using PERT.Core;
-    using PERT.DataRepository;
 
     using PertNET.Core;
+    using PertNET.DataRepository;
     using PertNET.Model;
 
     [SupportedOSPlatform("windows")]

@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace PERT.DataRepository
+namespace PertNET.DataRepository
 {
     using System;
 

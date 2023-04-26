@@ -27,9 +27,8 @@ namespace PertNET.ViewModel
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.WPF;
 
-    using PERT.DataRepository;
-
     using PertNET.Core;
+    using PertNET.DataRepository;
     using PertNET.Export.Exporter;
     using PertNET.Model;
 

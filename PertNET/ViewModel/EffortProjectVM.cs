@@ -34,8 +34,6 @@ namespace PERT.ViewModel
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
 
-    using PERT.DataRepository;
-
     using PertNET.Core;
     using PertNET.DataRepository;
     using PertNET.Model;

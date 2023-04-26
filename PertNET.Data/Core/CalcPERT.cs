@@ -13,7 +13,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace PertNET.Export.Exporter
+namespace PertNET.Data.Core
 {
     using System;
     using System.Collections;
