@@ -248,7 +248,8 @@ namespace PertNET.ViewModel
             this.CmdAgg.AddOrSetCommand("InsertEntryCommand", new RelayCommand(p1 => this.InsertEntryHandler(), p2 => this.CanInsertEntryHandler()));
 
             this.CmdAgg.AddOrSetCommand("SettingsCommand", new RelayCommand(p1 => this.SettingsHandler(), p2 => this.CanSettingsHandler()));
-            this.CmdAgg.AddOrSetCommand("ExportCommand", new RelayCommand(p1 => this.ExportHandler(), p2 => this.CanExportHandler()));
+            this.CmdAgg.AddOrSetCommand("ExportDetailCommand", new RelayCommand(p1 => this.ExportDetailHandler(), p2 => this.CanExportHandler()));
+            this.CmdAgg.AddOrSetCommand("ExportSimpleCommand", new RelayCommand(p1 => this.ExportSimpleHandler(), p2 => this.CanExportHandler()));
         }
 
         private void WindowCloseHandler()

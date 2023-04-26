@@ -46,7 +46,7 @@ namespace PertNET.ViewModel
             }
         }
 
-        private void ExportHandler()
+        private void ExportDetailHandler()
         {
             string outPathFile = string.Empty;
 
@@ -134,6 +134,10 @@ namespace PertNET.ViewModel
                 MessageBox.Show(ex.Message);
                 throw;
             }
+        }
+
+        private void ExportSimpleHandler()
+        {
         }
 
         private string ExportFolder(string initFolder, string initialExportFile)
