@@ -244,25 +244,25 @@
 
                                     <Button.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding Path=CmdAgg[NewDatabaseCommand]}" Header="Neue Datenbank">
+                                            <MenuItem Command="{Binding Path=CmdAgg[NewDatabaseCommand]}" Header="{StaticResource ResourceKey=MainNewDatabaseCommand}">
                                                 <MenuItem.Icon>
                                                     <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntNewDatabase}}" />
                                                 </MenuItem.Icon>
                                             </MenuItem>
 
-                                            <MenuItem Command="{Binding Path=CmdAgg[OpenDatabaseCommand]}" Header="Öffnen Datenbank (Ctrl-O)">
+                                            <MenuItem Command="{Binding Path=CmdAgg[OpenDatabaseCommand]}" Header="{StaticResource ResourceKey=MainOpenDatabaseCommand}">
                                                 <MenuItem.Icon>
                                                     <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntOpenDatabase}}" />
                                                 </MenuItem.Icon>
                                             </MenuItem>
 
-                                            <MenuItem Command="{Binding Path=CmdAgg[CloseDatabaseCommand]}" Header="Schließen Datenbank">
+                                            <MenuItem Command="{Binding Path=CmdAgg[CloseDatabaseCommand]}" Header="{StaticResource ResourceKey=MainCloseDatabaseCommand}">
                                                 <MenuItem.Icon>
                                                     <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntCloseDatabase}}" />
                                                 </MenuItem.Icon>
                                             </MenuItem>
 
-                                            <MenuItem Command="{Binding Path=CmdAgg[SaveAsDatabaseCommand]}" Header="Speichern Datenbank unter ...">
+                                            <MenuItem Command="{Binding Path=CmdAgg[SaveAsDatabaseCommand]}" Header="{StaticResource ResourceKey=MainSaveAsDatabaseCommand}">
                                                 <MenuItem.Icon>
                                                     <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntSaveDatabase}}" />
                                                 </MenuItem.Icon>
@@ -296,7 +296,13 @@
 
                                             <Separator />
 
-                                            <MenuItem Command="{Binding Path=CmdAgg[ExportCommand]}" Header="Export">
+                                            <MenuItem Command="{Binding Path=CmdAgg[ExportDetailCommand]}" Header="Export detailliert Liste">
+                                                <MenuItem.Icon>
+                                                    <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntExport}}" />
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+
+                                            <MenuItem Command="{Binding Path=CmdAgg[ExportSimpleCommand]}" Header="Export einfache Liste">
                                                 <MenuItem.Icon>
                                                     <Image Source="{localUI:ImageFromFont Text={StaticResource ResourceKey=fntExport}}" />
                                                 </MenuItem.Icon>

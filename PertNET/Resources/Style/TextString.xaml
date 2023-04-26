@@ -6,4 +6,10 @@
     <sys:String x:Key="StrFilterNotFound1">Aktuell sind keine Daten zum anzeigen vorhanden.</sys:String>
     <sys:String x:Key="StrFilterNotFound2" xml:space="preserve"> Prüfen Sie Ihren Filter, bzw.&#13;       öffnen Sie eine Effort-Datenbank mit aktuellen Daten &#13;       oder erstellen Sie eine neuen Datenbank.</sys:String>
 
+    <!--  Kontext Main Menü  MainWindow.xaml  -->
+    <sys:String x:Key="MainNewDatabaseCommand">Neue Datenbank</sys:String>
+    <sys:String x:Key="MainOpenDatabaseCommand">Öffnen Datenbank (Ctrl-O)</sys:String>
+    <sys:String x:Key="MainCloseDatabaseCommand">Schließen Datenbank</sys:String>
+    <sys:String x:Key="MainSaveAsDatabaseCommand">Speichern Datenbank unter...</sys:String>
+
 </ResourceDictionary>
