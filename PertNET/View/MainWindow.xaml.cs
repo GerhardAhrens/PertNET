@@ -43,10 +43,10 @@
                 {
                     if (sm.ApplicationPosition == true)
                     {
-                        /*
-                        UserPreferences userPrefs = new UserPreferences(this);
-                        userPrefs.Load();
-                        */
+                        using (UserPreferences userPrefs = new UserPreferences(this, ApplicationProperties.AssemplyPath))
+                        {
+                            userPrefs.Load();
+                        }
                     }
                     else
                     {
@@ -108,10 +108,10 @@
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            /*
-            UserPreferences userPrefs = new UserPreferences(this);
-            userPrefs.Save();
-            */
+            using (UserPreferences userPrefs = new UserPreferences(this, ApplicationProperties.AssemplyPath))
+            {
+                userPrefs.Save();
+            }
 
             using (LocalSettingsManager sm = new LocalSettingsManager())
             {
