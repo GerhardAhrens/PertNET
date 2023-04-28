@@ -23,6 +23,7 @@ namespace PertNET.ViewModel
     using System.Windows;
 
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.IO;
     using EasyPrototypingNET.WPF;
@@ -119,7 +120,7 @@ namespace PertNET.ViewModel
 
                     LastSavedFolder.GetOrSet(typeof(EffortProject).Name, Path.GetDirectoryName(outPathFile));
 
-                    using (PERTEffortExport exportExcel = new PERTEffortExport(dt))
+                    using (EffortDetailExport exportExcel = new EffortDetailExport(dt))
                     {
                         exportExcel.WorkUserInfo = workUserInfo;
                         exportExcel.Filename = outPathFile;
@@ -131,13 +132,96 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
         private void ExportSimpleHandler()
         {
+            string outPathFile = string.Empty;
+
+            if (this.CurrentSelectedItem == null)
+            {
+                AppMsgDialog.DataNotFound();
+                return;
+            }
+            IDictionary<string, Type> columns = EffortProject.ExportFieldsFilter;
+            if (columns == null || columns.Count == 0)
+            {
+                AppMsgDialog.NoMarkedColumns();
+                return;
+            }
+
+            string initFolder = LastSavedFolder.Get(typeof(EffortProject).Name);
+            string initialExportFile = $"{this.ExportCompanyName}_{this.ExportProjectName}.xlsx";
+
+            outPathFile = this.ExportFolder(initFolder, initialExportFile);
+
+            try
+            {
+                if (string.IsNullOrEmpty(outPathFile) == false)
+                {
+                    WorkUserInfo workUserInfo = null;
+                    using (WorkUserInfoRepository repository = new WorkUserInfoRepository(this.CurrentDatabaseFile))
+                    {
+                        workUserInfo = repository.List().First();
+                        if (string.IsNullOrEmpty(workUserInfo.Company) == false || string.IsNullOrEmpty(workUserInfo.Project) == false)
+                        {
+                            initialExportFile = $"{this.ExportCompanyName}_{this.ExportProjectName}.xlsx";
+                        }
+                        else
+                        {
+                            initialExportFile = "Unbekannt.xlsx";
+                        }
+                    }
+
+                    DataTable dt = null;
+                    if (this.SelectedRows == 0)
+                    {
+                        List<EffortProject> locList = this.DialogDataView.OfType<EffortProject>().ToList<EffortProject>();
+                        dt = locList.ToDataTable<EffortProject>(nameof(EffortProject), columns);
+                    }
+                    else
+                    {
+                        List<EffortProject> locList = this.DialogDataView.OfType<EffortProject>().Where(w => w.IsSelected == true).ToList<EffortProject>();
+                        dt = locList.ToDataTable<EffortProject>(nameof(EffortProject), columns);
+                    }
+
+                    if (dt == null || dt.Rows.Count == 0)
+                    {
+                        AppMsgDialog.NoMarkedRows();
+                        return;
+                    }
+
+
+                    Dictionary<string, string> translateText = null;
+                    using (TranslateDictionary translateDic = new TranslateDictionary(dt.Columns))
+                    {
+                        translateDic.AddTranslateText("Chapter", "Aufwandspunkt");
+                        translateDic.AddTranslateText("Title", "Bezeichnung");
+                        translateDic.AddTranslateText("Min", "optimistisch");
+                        translateDic.AddTranslateText("Mid", "wahrscheinlich");
+                        translateDic.AddTranslateText("Max", "pessimistisch");
+                        translateDic.AddTranslateText("Factor", "Faktor");
+                        translateDic.AddTranslateText("Description", "Beschreibung");
+                        translateText = translateDic.Translate();
+                    }
+
+                    LastSavedFolder.GetOrSet(typeof(EffortProject).Name, Path.GetDirectoryName(outPathFile));
+
+                    using (EffortSimpleExport exportExcel = new EffortSimpleExport(dt))
+                    {
+                        exportExcel.Filename = outPathFile;
+                        exportExcel.TranslateDictionary = translateText;
+                        exportExcel.Run();
+                        LastSavedFolder.Save();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionViewer.Show(ex, this.GetType().Name);
+            }
         }
 
         private string ExportFolder(string initFolder, string initialExportFile)

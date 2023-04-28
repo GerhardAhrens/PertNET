@@ -15,32 +15,31 @@
 
 namespace PertNET.Export.Exporter
 {
-    using ClosedXML.Excel;
-
-    using EasyPrototypingNET.IO;
-
-    using PertNET.Data.Core;
-    using PertNET.Model;
-
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
     using System.IO;
     using System.Linq;
     using System.Runtime.Versioning;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
 
+    using ClosedXML.Excel;
+
+    using DocumentFormat.OpenXml.Presentation;
+
+    using EasyPrototypingNET.IO;
+
+    using PertNET.Data.Core;
+    using PertNET.Model;
+
     [SupportedOSPlatform("windows")]
-    public class PERTEffortExport : ReportsExcelBase
+    public class EffortDetailExport : ReportsExcelBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PERTEffortExport"/> class.
+        /// Initializes a new instance of the <see cref="EffortDetailExport"/> class.
         /// </summary>
-        public PERTEffortExport(DataTable objects) : base(objects)
+        public EffortDetailExport(DataTable objects) : base(objects)
         {
             this.SourceItems = objects;
 
@@ -117,19 +116,19 @@ namespace PertNET.Export.Exporter
                     ws.SetValue<string>("F1", $"Stand: {lastDate}");
                     ws.Range("F1", "G1").Merge().Row(1);
 
-                    ws.CellHeader("A3", translateColumnText["Chapter"], 18);
-                    ws.CellHeader("B3", translateColumnText["Title"], 40);
-                    ws.CellHeader("C3", translateColumnText["Min"], 16);
-                    ws.CellHeader("D3", translateColumnText["Mid"], 17);
-                    ws.CellHeader("E3", translateColumnText["Max"], 16);
-                    ws.CellHeader("F3", translateColumnText["Factor"], 10);
-                    ws.CellHeader("G3", "PERT", 15);
-                    ws.CellHeader("H3", "Tag", 30);
+                    ws.CellHeader($"A{rowHeader}", translateColumnText["Chapter"], 18);
+                    ws.CellHeader($"B{rowHeader}", translateColumnText["Title"], 40);
+                    ws.CellHeader($"C{rowHeader}", translateColumnText["Min"], 16);
+                    ws.CellHeader($"D{rowHeader}", translateColumnText["Mid"], 17);
+                    ws.CellHeader($"E{rowHeader}", translateColumnText["Max"], 16);
+                    ws.CellHeader($"F{rowHeader}", translateColumnText["Factor"], 10);
+                    ws.CellHeader($"G{rowHeader}", "PERT", 15);
+                    ws.CellHeader($"H{rowHeader}", "Tag", 30);
 
                     var isDesc = objects.Rows.Cast<DataRow>().Any(a => a.Field<bool>("ShowDescription") == true);
                     if (isDesc == true)
                     {
-                        ws.CellHeader("I3", translateColumnText["Description"], 40);
+                        ws.CellHeader($"I{rowHeader}", translateColumnText["Description"], 40);
                     }
 
                     ws.SetAutoFilter(rowHeader);
@@ -142,17 +141,18 @@ namespace PertNET.Export.Exporter
 
                     foreach (DataRow row in objects.Rows)
                     {
+                        XLColor backColor = XLColor.FromName(row["BackgroundColor"].ToString());
                         startCol++;
                         startRow++;
 
                         cellRef = $"{ws.GetExcelColumnName(startCol)}{startRow}";
                         string chapter = row["Chapter"].ToString();
-                        ws.SetValue<string>(cellRef, chapter);
+                        ws.SetValue<string>(cellRef, chapter, backColor, XLColor.Black);
 
                         startCol++;
                         cellRef = $"{ws.GetExcelColumnName(startCol)}{startRow}";
                         string title = row["Title"].ToString();
-                        ws.SetValue<string>(cellRef, title);
+                        ws.SetValue<string>(cellRef, title, backColor, XLColor.Black);
 
                         startCol++;
                         cellRef = $"{ws.GetExcelColumnName(startCol)}{startRow}";
@@ -197,7 +197,7 @@ namespace PertNET.Export.Exporter
                         startCol++;
                         cellRef = $"{ws.GetExcelColumnName(startCol)}{startRow}";
                         string tagText = row["Tag"].ToOrDefault<string>();
-                        ws.SetValue<string>(cellRef, tagText);
+                        ws.SetValue<string>(cellRef, tagText, backColor, XLColor.Black);
 
                         if (isDesc == true)
                         {

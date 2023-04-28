@@ -92,8 +92,7 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
@@ -162,8 +161,7 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
@@ -205,8 +203,7 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
@@ -234,8 +231,7 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
@@ -290,51 +286,58 @@ namespace PertNET.ViewModel
         {
             if (this.IsDatabaseOpen == true)
             {
-                WorkUserInfo workUserInfo = null;
-                using (WorkUserInfoRepository repository = new WorkUserInfoRepository(this.CurrentDatabaseFile))
+                try
                 {
-                    workUserInfo = repository.List().First();
-                    this.ProjectName = workUserInfo.Project;
-                    this.ExportCompanyName = workUserInfo.Company;
-                    this.ExportProjectName = workUserInfo.Project;
-                }
-
-                using (EffortProjectRepository repository = new EffortProjectRepository(this.CurrentDatabaseFile))
-                {
-                    IEnumerable<EffortProject> overviewSource = repository.List();
-                    if (overviewSource != null)
+                    WorkUserInfo workUserInfo = null;
+                    using (WorkUserInfoRepository repository = new WorkUserInfoRepository(this.CurrentDatabaseFile))
                     {
-                        this.DialogDataView = CollectionViewSource.GetDefaultView(overviewSource);
-                        if (this.DialogDataView != null)
+                        workUserInfo = repository.List().First();
+                        this.ProjectName = workUserInfo.Project;
+                        this.ExportCompanyName = workUserInfo.Company;
+                        this.ExportProjectName = workUserInfo.Project;
+                    }
+
+                    using (EffortProjectRepository repository = new EffortProjectRepository(this.CurrentDatabaseFile))
+                    {
+                        IEnumerable<EffortProject> overviewSource = repository.List();
+                        if (overviewSource != null)
                         {
-                            this.DialogDataView.Filter = rowItem => this.DataDefaultFilter(rowItem as EffortProject);
-                            this.DialogDataView.SortDescriptions.Clear();
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterA", ListSortDirection.Ascending));
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterB", ListSortDirection.Ascending));
-                            this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterC", ListSortDirection.Ascending));
-                            this.DialogDataView.MoveCurrentToFirst();
-                            this.MaxRowCount = this.DialogDataView.Count<EffortProject>();
-
-                            if (this.MaxRowCount > 0)
+                            this.DialogDataView = CollectionViewSource.GetDefaultView(overviewSource);
+                            if (this.DialogDataView != null)
                             {
-                                this.IsFilterContentFound = false;
-                                this.MinFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Min).ToString("0.00");
-                                this.MidFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Mid).ToString("0.00");
-                                this.MaxFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Max).ToString("0.00");
+                                this.DialogDataView.Filter = rowItem => this.DataDefaultFilter(rowItem as EffortProject);
+                                this.DialogDataView.SortDescriptions.Clear();
+                                this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterA", ListSortDirection.Ascending));
+                                this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterB", ListSortDirection.Ascending));
+                                this.DialogDataView.SortDescriptions.Add(new SortDescription("ChapterC", ListSortDirection.Ascending));
+                                this.DialogDataView.MoveCurrentToFirst();
+                                this.MaxRowCount = this.DialogDataView.Count<EffortProject>();
 
-                                double pertFull = 0;
-                                foreach (EffortProject item in this.DialogDataView.Cast<EffortProject>())
+                                if (this.MaxRowCount > 0)
                                 {
-                                    pertFull += this.CalculatePERTItemValue(item.Min, item.Mid, item.Max, item.Factor);
+                                    this.IsFilterContentFound = false;
+                                    this.MinFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Min).ToString("0.00");
+                                    this.MidFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Mid).ToString("0.00");
+                                    this.MaxFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Max).ToString("0.00");
+
+                                    double pertFull = 0;
+                                    foreach (EffortProject item in this.DialogDataView.Cast<EffortProject>())
+                                    {
+                                        pertFull += this.CalculatePERTItemValue(item.Min, item.Mid, item.Max, item.Factor);
+                                    }
+
+                                    this.PERTFullEffort = pertFull.ToString("0.00");
+
+                                    EffortProject lastEdit = this.DialogDataView.Cast<EffortProject>().OrderByDescending(x => x.ModifiedOn).FirstOrDefault();
+                                    this.LastEdit = $"{lastEdit.ModifiedBy} am {lastEdit.ModifiedOn}";
                                 }
-
-                                this.PERTFullEffort = pertFull.ToString("0.00");
-
-                                EffortProject lastEdit = this.DialogDataView.Cast<EffortProject>().OrderByDescending(x => x.ModifiedOn).FirstOrDefault();
-                                this.LastEdit = $"{lastEdit.ModifiedBy} am {lastEdit.ModifiedOn}";
                             }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionViewer.Show(ex, this.GetType().Name);
                 }
             }
         }
@@ -377,29 +380,36 @@ namespace PertNET.ViewModel
         {
             if (value != null && this.DialogDataView != null)
             {
-                this.DialogDataView.Refresh();
-                this.MaxRowCount = this.DialogDataView.Cast<EffortProject>().Count();
-                this.DialogDataView.MoveCurrentToFirst();
-
-                if (this.MaxRowCount > 0)
+                try
                 {
-                    this.IsFilterContentFound = false;
+                    this.DialogDataView.Refresh();
+                    this.MaxRowCount = this.DialogDataView.Cast<EffortProject>().Count();
+                    this.DialogDataView.MoveCurrentToFirst();
 
-                    this.MinFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Min).ToString("0.00");
-                    this.MidFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Mid).ToString("0.00");
-                    this.MaxFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Max).ToString("0.00");
-
-                    double pertFull = 0;
-                    foreach (EffortProject item in this.DialogDataView.Cast<EffortProject>())
+                    if (this.MaxRowCount > 0)
                     {
-                        pertFull += this.CalculatePERTItemValue(item.Min, item.Mid, item.Max, item.Factor);
-                    }
+                        this.IsFilterContentFound = false;
 
-                    this.PERTFullEffort = pertFull.ToString("0.00");
+                        this.MinFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Min).ToString("0.00");
+                        this.MidFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Mid).ToString("0.00");
+                        this.MaxFullEffort = this.DialogDataView.Cast<EffortProject>().Sum(s => s.Max).ToString("0.00");
+
+                        double pertFull = 0;
+                        foreach (EffortProject item in this.DialogDataView.Cast<EffortProject>())
+                        {
+                            pertFull += this.CalculatePERTItemValue(item.Min, item.Mid, item.Max, item.Factor);
+                        }
+
+                        this.PERTFullEffort = pertFull.ToString("0.00");
+                    }
+                    else
+                    {
+                        this.IsFilterContentFound = true;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    this.IsFilterContentFound = true;
+                    ExceptionViewer.Show(ex, this.GetType().Name);
                 }
             }
         }
@@ -416,7 +426,12 @@ namespace PertNET.ViewModel
 
         private double CalculatePERTItemValue(double minEffort, double midEffort, double maxEffort, double factor)
         {
-            double tempResult = ((minEffort + (midEffort * 4) + maxEffort) / 6) * factor;
+            double tempResult = 0;
+            using (CalcPERT calc = new CalcPERT())
+            {
+                tempResult = calc.PERTEffort(minEffort, midEffort, maxEffort, factor);
+            }
+
             return tempResult;
         }
     }
