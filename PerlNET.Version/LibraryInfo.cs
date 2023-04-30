@@ -2,8 +2,8 @@
 {
     public static class LibraryInfo
     {
-        public const string Version = "2.1.2023.11";
-        public const string BuildDate = "20230426";
+        public const string Version = "2.1.2023.12";
+        public const string BuildDate = "20230428";
 
         public const string AssemblyTitle = "PertNET";
         public const string AssemblyDescription = "Tool zur Aufwandschätzung nach PERT";

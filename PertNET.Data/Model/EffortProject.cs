@@ -71,6 +71,7 @@ namespace PertNET.Model
         [ExportField]
         public double Factor { get; set; }
 
+        [ExportField]
         public string BackgroundColor { get; set; }
 
         [SearchFilter]

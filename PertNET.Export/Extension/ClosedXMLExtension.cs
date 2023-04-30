@@ -8,7 +8,9 @@
 // <email>developer@lifeprojects.de</email>
 // <date>6.8.2020</date>
 //
-// <summary>Class for ClosedXMLExtension</summary>
+// <summary>
+// Class for ClosedXMLExtension
+// </summary>
 //-----------------------------------------------------------------------
 
 namespace ClosedXML.Excel
@@ -24,11 +26,21 @@ namespace ClosedXML.Excel
     [SupportedOSPlatform("windows")]
     public static class ClosedXMLExtension
     {
+        /// <summary>
+        /// Die angebene Zeile fixieren
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="row"></param>
         public static void FreezeRows(this IXLWorksheet @this, int row)
         {
             @this.SheetView.FreezeRows(row);
         }
 
+        /// <summary>
+        /// Die angegebene Spalte fixieren
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="col"></param>
         public static void FreezeColumns(this IXLWorksheet @this, int col)
         {
             @this.SheetView.FreezeColumns(col);
@@ -269,9 +281,14 @@ namespace ClosedXML.Excel
             return SetValue<TTyp>(@this, cellRef, value, XLColor.Transparent, XLColor.Black, setBold, format, setBorder: false);
         }
 
-        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, string format = "")
+        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, string format)
         {
             return SetValue<TTyp>(@this, cellRef, value, XLColor.Transparent, fontColor, false, format, setBorder: false);
+        }
+
+        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor backColor, XLColor fontColor)
+        {
+            return SetValue<TTyp>(@this, cellRef, value, backColor, fontColor, false, string.Empty, setBorder: false);
         }
 
         public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, bool setBold,string format = "")

@@ -30,6 +30,7 @@ namespace PERT.ViewModel
     using DocumentFormat.OpenXml.Math;
 
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.Pattern;
     using EasyPrototypingNET.WPF;
@@ -303,8 +304,7 @@ namespace PERT.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 
@@ -476,8 +476,7 @@ namespace PERT.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
 

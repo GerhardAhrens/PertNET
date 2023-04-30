@@ -19,6 +19,7 @@ namespace PertNET.ViewModel
     using System.Windows;
 
     using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;
 
@@ -61,8 +62,7 @@ namespace PertNET.ViewModel
             }
             catch (Exception ex)
             {
-                string errorText = ex.Message;
-                throw;
+                ExceptionViewer.Show(ex, this.GetType().Name);
             }
         }
     }
