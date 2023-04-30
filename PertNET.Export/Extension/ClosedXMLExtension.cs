@@ -269,9 +269,14 @@ namespace ClosedXML.Excel
             return SetValue<TTyp>(@this, cellRef, value, XLColor.Transparent, XLColor.Black, setBold, format, setBorder: false);
         }
 
-        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, string format = "")
+        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, string format)
         {
             return SetValue<TTyp>(@this, cellRef, value, XLColor.Transparent, fontColor, false, format, setBorder: false);
+        }
+
+        public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor backColor, XLColor fontColor)
+        {
+            return SetValue<TTyp>(@this, cellRef, value, backColor, fontColor, false, string.Empty, setBorder: false);
         }
 
         public static IXLWorksheet SetValue<TTyp>(this IXLWorksheet @this, string cellRef, object value, XLColor fontColor, bool setBold,string format = "")
