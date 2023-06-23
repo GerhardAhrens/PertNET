@@ -40,25 +40,34 @@
                 InitializeCultures(DEFAULTLANGUAGE);
 
                 string[] cmdLine = Environment.GetCommandLineArgs();
-                if (cmdLine.Length == 2)
+                if (cmdLine.Length >= 2)
                 {
                     string filePath = cmdLine[1];
+                    MessageBox.Show(filePath);
                     if (File.Exists(filePath) == true)
                     {
                         CmdLineDatabase = filePath;
                     }
                 }
 
-                exePath = Assembly.GetExecutingAssembly().Location;
-                exeName = Path.GetFileName(exePath);
+                exePath = Assembly.GetExecutingAssembly().Location.Replace("dll", "exe", StringComparison.OrdinalIgnoreCase);
+                exeName = Path.GetFileName(exePath).Replace("dll", "exe", StringComparison.OrdinalIgnoreCase);
 
-                FileAssociation fa = new FileAssociation("eff", exePath, exeName);
-                if (fa != null)
+                try
                 {
-                    if (fa.ExtensionExist() == false)
+                    FileAssociation fa = new FileAssociation("eff", exePath, exeName);
+                    if (fa != null)
                     {
-                        fa.CreateAssociation();
+                        //fa.ExtensionDelete();
+                        if (fa.ExtensionExist() == false)
+                        {
+                            fa.CreateAssociation();
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    string errorText = ex.Message;
                 }
             }
             catch (Exception ex)

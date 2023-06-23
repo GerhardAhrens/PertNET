@@ -59,6 +59,7 @@ namespace PertNET.ViewModel
 
             this.IsFilterContentFound = true;
 
+            //MessageBox.Show(App.CmdLineDatabase);
             if (string.IsNullOrEmpty(App.CmdLineDatabase) == false)
             {
                 this.OpenDatabaseFromCmdLine(App.CmdLineDatabase);
