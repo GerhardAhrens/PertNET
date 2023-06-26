@@ -50,9 +50,9 @@
                     }
                 }
 
+                /*
                 exePath = Assembly.GetExecutingAssembly().Location.Replace("dll", "exe", StringComparison.OrdinalIgnoreCase);
                 exeName = Path.GetFileName(exePath).Replace("dll", "exe", StringComparison.OrdinalIgnoreCase);
-
                 try
                 {
                     FileAssociation fa = new FileAssociation("eff", exePath, exeName);
@@ -69,6 +69,7 @@
                 {
                     string errorText = ex.Message;
                 }
+                */
             }
             catch (Exception ex)
             {

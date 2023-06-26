@@ -19,7 +19,8 @@
     Height="500"
     MinWidth="900"
     MinHeight="500"
-    d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowVM}"
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowVM,
+                                     IsDesignTimeCreatable=False}"
     libWPF:ActionDialogClosing.RaiseClosingHandler="True"
     Style="{DynamicResource ResourceKey=CustomWindowStyle}"
     TextOptions.TextFormattingMode="Display"
