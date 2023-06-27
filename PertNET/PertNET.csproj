@@ -41,7 +41,6 @@
     <Resource Include="Resources\Font\Font Awesome 6 Brands-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Regular-400.otf" />
     <Resource Include="Resources\Font\Font Awesome 6 Free-Solid-900.otf" />
-    <EmbeddedResource Include="Resources\BuildDate.txt" />
     <EmbeddedResource Include="Resources\HelpText\Help_EffortProjectVM.md" />
     <EmbeddedResource Include="Resources\HelpText\Help_MainWindowVM.md" />
     <EmbeddedResource Include="Resources\Picture\ApplicationIcon.ico" />
@@ -74,7 +73,7 @@
   <ItemGroup>
     <PackageReference Include="LiteDB" Version="5.0.16" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-    <PackageReference Include="System.Management" Version="7.0.1" />
+    <PackageReference Include="System.Management" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>

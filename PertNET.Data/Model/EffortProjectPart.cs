@@ -20,6 +20,8 @@ namespace PertNET.Model
     using EasyPrototypingNET.Core.Application;
     using EasyPrototypingNET.Interface;
 
+    using PertNET.Data.Core;
+
     public partial class EffortProject : ModelBase<EffortProject>, IModel
     {
         public string FullName

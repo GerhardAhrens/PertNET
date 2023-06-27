@@ -18,6 +18,7 @@ namespace PertNET.ViewModel
     using System;
     using System.Runtime.Versioning;
 
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;

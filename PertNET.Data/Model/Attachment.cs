@@ -19,6 +19,8 @@ namespace PertNET.Model
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
 
+    using PertNET.Data.Core;
+
     using System;
 
 

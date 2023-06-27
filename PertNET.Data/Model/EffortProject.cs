@@ -25,6 +25,8 @@ namespace PertNET.Model
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
 
+    using PertNET.Data.Core;
+
     [DebuggerDisplay("Chapter={this.Chapter}:Title={this.Title}Min={this.Min};Mid={this.Mid};Max={this.Max};Factor={this.Factor}")]
     public partial class EffortProject : ModelBase<EffortProject>, IModel, INotifyPropertyChanged
     {

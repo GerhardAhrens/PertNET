@@ -21,6 +21,7 @@ namespace PertNET.ViewModel
     using System.Windows;
     using DocumentFormat.OpenXml.EMMA;
 
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;

@@ -23,6 +23,7 @@ namespace PERT.ViewModel
     using System.Reflection;
     using System.Runtime.Versioning;
 
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.Pattern;

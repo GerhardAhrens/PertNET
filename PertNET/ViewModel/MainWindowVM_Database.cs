@@ -23,7 +23,7 @@ namespace PertNET.ViewModel
     using System.Windows;
     using System.Windows.Data;
 
-    using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.IO;

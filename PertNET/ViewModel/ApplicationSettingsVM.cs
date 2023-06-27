@@ -19,6 +19,7 @@ namespace PertNET.ViewModel
     using System.Linq;
     using System.Windows;
 
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Core.Collection;
     using EasyPrototypingNET.Interface;

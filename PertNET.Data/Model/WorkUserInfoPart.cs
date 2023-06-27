@@ -19,6 +19,8 @@ namespace PertNET.Model
     using EasyPrototypingNET.Core.Application;
     using EasyPrototypingNET.Interface;
 
+    using PertNET.Data.Core;
+
     public sealed partial class WorkUserInfo : ModelBase<WorkUserInfo>, IModel
     {
         public string FullName

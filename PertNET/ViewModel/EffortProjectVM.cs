@@ -17,18 +17,15 @@
 namespace PERT.ViewModel
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Versioning;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Media;
 
-    using DocumentFormat.OpenXml.Math;
-
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
@@ -38,7 +35,6 @@ namespace PERT.ViewModel
     using PertNET.Core;
     using PertNET.DataRepository;
     using PertNET.Model;
-    using static System.Runtime.InteropServices.JavaScript.JSType;
 
     [SupportedOSPlatform("windows")]
     public class EffortProjectVM : ViewModelBase<EffortProjectVM>, IViewModel, IDataErrorInfo

@@ -24,6 +24,7 @@ namespace PertNET.ViewModel
     using System.Windows;
     using System.Windows.Input;
 
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.Core;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.Pattern;

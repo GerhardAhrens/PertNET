@@ -18,13 +18,12 @@ namespace PertNET.ViewModel
     using System;
     using System.Windows;
 
-    using EasyPrototypingNET.Core;
+    using EasyPrototypingNET.BaseClass;
     using EasyPrototypingNET.ExceptionHandling;
     using EasyPrototypingNET.Interface;
     using EasyPrototypingNET.WPF;
 
     using PertNET.View;
-    using PertNET.ViewModel;
 
     public partial class MainWindowVM : ViewModelBase<MainWindowVM>, IViewModel
     {
