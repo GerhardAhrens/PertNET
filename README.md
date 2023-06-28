@@ -9,3 +9,9 @@ In dem Projekt werden zwei zusätzliche Pakete verwendet
 | [ClosedXML](https://github.com/ClosedXML/ClosedXML) | Erstellen von Exceldateien ohne notwendige MS Office Installation |
 | [LiteDB](https://github.com/mbdavid/LiteDB) | NoSQL Datenbank |
 
+```xml
+<PublishSingleFile>true</PublishSingleFile>
+<SelfContained>true</SelfContained>
+<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+´´´

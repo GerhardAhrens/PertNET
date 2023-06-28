@@ -7,11 +7,7 @@
 		<UseWPF>true</UseWPF>
 		<ApplicationIcon>Resources\Picture\ApplicationIcon.ico</ApplicationIcon>
 		<UseWindowsForms>True</UseWindowsForms>
-		<PublishSingleFile>true</PublishSingleFile>
-		<SelfContained>true</SelfContained>
 		<DebugType>embedded</DebugType>
-		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 	</PropertyGroup>
 
