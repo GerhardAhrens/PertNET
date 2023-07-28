@@ -9,6 +9,10 @@
 		<UseWindowsForms>True</UseWindowsForms>
 		<DebugType>embedded</DebugType>
 		<PlatformTarget>AnyCPU</PlatformTarget>
+
+		<PublishSingleFile>true</PublishSingleFile>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
