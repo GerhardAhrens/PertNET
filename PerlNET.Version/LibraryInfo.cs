@@ -2,8 +2,8 @@
 {
     public static class LibraryInfo
     {
-        public const string Version = "2.1.2023.12";
-        public const string BuildDate = "20230428";
+        public const string Version = "2.1.2024.13";
+        public const string BuildDate = "20240301";
 
         public const string AssemblyTitle = "PertNET";
         public const string AssemblyDescription = "Tool zur Aufwandschätzung nach PERT";
@@ -18,7 +18,7 @@
         public const string AssemblyEXPORTDescription = "Bereitstellung von Exportfunktionen";
 
         public const string AssemblyCompany = "Lifeprojects.de";
-        public const string AssemblyCopyright = "Copyright © Gerhard Ahrens 2022-2023";
-        public const string AssemblyTrademark = "Erstellt von Gerhard Ahrens, 2023";
+        public const string AssemblyCopyright = "Copyright © Gerhard Ahrens 2022-2024";
+        public const string AssemblyTrademark = "Erstellt von Gerhard Ahrens, 2024";
     }
 }

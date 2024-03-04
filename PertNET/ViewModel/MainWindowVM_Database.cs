@@ -41,7 +41,7 @@ namespace PertNET.ViewModel
             string outPathFile = string.Empty;
             string fileTyp = "eff";
             string initFolder = LastSavedFolder.Get("CreateDatabase");
-            string initialFile = $"{nameof(MainWindowVM)}.eff";
+            string initialFile = $"PERT-Database-{DateTime.Now.ToString("yyyyMMdd")}.eff";
 
             try
             {
@@ -52,8 +52,8 @@ namespace PertNET.ViewModel
                 SelectFolderSettings settings = new SelectFolderSettings();
                 settings.Owner = Application.Current.MainWindow;
                 settings.HeaderText = "Speichern der Datenbanke als ...";
-                settings.InstructionText = "Erstellen einer neuen PERT Datenbank";
-                settings.DescriptionText = "Wählen Sie ein Verzeichnis aus der Liste oder ein neues Verszeichnis über den Button unten.";
+                settings.InstructionText = "Erstellen einer neuen PERT Datenbank. Vergeben Sie pro PERT Schätzung einen eigenen Namen in dem gewählten Verzeichnis.";
+                settings.DescriptionText = "Wählen Sie ein Verzeichnis aus der Liste oder ein neues Verszeichnis über den Button (+) unten.";
                 settings.SelectFolderText = "Wählen sie einen anderen Ordner...";
                 settings.FileTyp = fileTyp;
                 settings.FileFilter = fileFilter;
