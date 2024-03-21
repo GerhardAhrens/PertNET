@@ -447,24 +447,5 @@ namespace PertNET.Data.Core
 
             return new Tuple<string, Type, string, int>(p.FieldName, pi == null ? null : pi.PropertyType, p.DisplayName, p.SortOrder);
         }
-
-
-        private IEnumerable<Tuple<string, Type, RequiredTyp>> RequiredFieldsSource<T>(object obj)
-        {
-            IEnumerable<Tuple<string, Type, RequiredTyp>> propertyFields = obj.GetType().GetProperties().SelectMany(p => p.GetCustomAttributes())
-                    .OfType<RequiredAttribute>()
-                    .AsParallel()
-                    .Select(p => RequiredFieldsInfo<T>(p))
-                    .ToList();
-
-            return propertyFields;
-        }
-
-        private Tuple<string, Type, RequiredTyp> RequiredFieldsInfo<T>(RequiredAttribute p)
-        {
-            PropertyInfo pi = typeof(T).GetProperty(p.FieldName);
-
-            return new Tuple<string, Type, RequiredTyp>(p.FieldName, pi == null ? null : pi.PropertyType, p.RequiredTyp);
-        }
     }
 }

@@ -488,6 +488,8 @@
                             VerticalAlignment="Top"
                             Background="WhiteSmoke"
                             FontSize="14"
+                            IsEnabled="True"
+                            IsReadOnly="False"
                             TagSeparator=","
                             TagViewTemplate="{StaticResource ResourceKey=TagViewControlTemplate}"
                             VerticalScrollBarVisibility="Auto">
